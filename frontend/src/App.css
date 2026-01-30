@@ -1,0 +1,21 @@
+
+*{
+  margin: 0;
+  padding: 0;
+}
+
+:root{
+  --navbar-bg:white;
+  --navlink-color:black;
+  --button-signup-bgcolor:green;
+  --button-signin-bgcolor:gray;
+
+  --title-color:black;
+
+  --about-heading-color:white;
+
+  --form-role-owner-color:green;
+  --form-role-provider-color:green;
+
+
+}
