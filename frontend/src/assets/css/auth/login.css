@@ -1,0 +1,116 @@
+/* src/assets/styles/auth/login.css */
+
+.loginWrapper {
+  min-height: 100vh;
+  background: #f4fff8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginCard {
+  background: white;
+  width: 420px;
+  padding: 40px;
+  border-radius: 18px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.loginTitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.loginSubtitle {
+  color: #64748b;
+  margin-top: 6px;
+  margin-bottom: 30px;
+}
+
+.inputGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #e2e8f0;
+  padding: 14px 16px;
+  border-radius: 12px;
+  margin-bottom: 18px;
+}
+
+.inputGroup input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 15px;
+}
+
+.loginExtras {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+.loginExtras a {
+  color: #22c55e;
+  text-decoration: none;
+}
+
+.loginButton {
+  width: 100%;
+  background: #15803d;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.loginButton:hover {
+  background: #166534;
+}
+
+.orDivider {
+  margin: 25px 0;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.socialLogin {
+  display: flex;
+  gap: 12px;
+}
+
+.googleBtn,
+.facebookBtn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.googleBtn:hover {
+  background: #f0fdf4;
+}
+
+.facebookBtn:hover {
+  background: #f0fdf4;
+}
+
+.switchAuth {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.switchAuth a {
+  color: #22c55e;
+  font-weight: 600;
+  text-decoration: none;
+}

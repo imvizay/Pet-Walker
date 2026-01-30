@@ -1,15 +1,39 @@
+import { Routes, Route } from 'react-router-dom'
+// base
+import Base from './layout/Base'
+import HeroSection from './pages/HomePage'
 
-import { Routes,Route } from 'react-router-dom'
+import './App.css'
+import AuthForm from './assets/css/forms/Register'
+import LoginAuth from './assets/css/forms/Login'
+// customer
+import CustomerDashboardLayout from './layout/dashboard/CustomerDashboard'
+import CustomerDashboard from './pages/customer/Dashboard'
+
+import JobPostForm from './components/forms/customer/JobPostForm'
+import FindProviders from './pages/customer/searchProvider/FindProvider'
+
+
 function App() {
   return (
-   <>
-   
-   <Routes path='/' element="">
-     <Route index element=""/>
-    
-   </Routes>
+    <Routes>
+      {/* BASE */}
+      <Route path="/" element={<Base />}>
+        <Route index element={<HeroSection/>}/>
+        <Route path="signup" element={<AuthForm/>}/>
+        <Route path="login" element={<LoginAuth/>}/>
+      </Route>
 
-   </>
+      {/* CUSTOMER */}
+      <Route path='customerDashboard' element={<CustomerDashboardLayout/>}>
+
+        <Route index element={<CustomerDashboard/>}/>
+        <Route path='jobpost' element={<JobPostForm/>}/>
+        <Route path='searchProvider' element={<FindProviders/>}/>
+
+      </Route>
+
+    </Routes>
   )
 }
 
