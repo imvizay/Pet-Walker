@@ -26,7 +26,7 @@ function CustomerDashboard() {
 
         <button className="searchButton">
           <FilterIcon size={18} />
-           <Link to="searchProvider">Find Care</Link>
+           <Link className='link' to="searchProvider">Find Care</Link>
         </button>
       </div>
     </div>
