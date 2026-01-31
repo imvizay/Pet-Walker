@@ -40,10 +40,29 @@
   gap: 8px;
   margin-top: 6px;
 }
-.checkbox .checkMint:placeholder-shown{
-    background-color: #2ecc71;
-    color: white;
+
+.checkMint input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #2e9f36; /* tick + background */
 }
+.customCheck::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 6px;
+  height: 6px;
+  border: solid white;      /* <-- tick color */
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  opacity: 0;
+}
+
+.checkMint input:checked + .customCheck::after {
+  opacity: 1;
+}
+
 
 .resetBtn {
   width: 100%;
