@@ -30,6 +30,7 @@ class UserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 
+<<<<<<< Updated upstream
 class Client(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=20, unique=True)
@@ -43,6 +44,17 @@ class Client(AbstractBaseUser, PermissionsMixin):
 
     contact = models.CharField(max_length=15)
 
+=======
+
+# Minimal Client Detail for registration
+class Client(AbstractBaseUser, PermissionsMixin):
+    email = models.EmailField(unique=True,blank=False,null=False)
+    username = models.CharField(max_length=20, unique=True,blank=False,null=False)
+    profile_pic = models.ImageField(upload_to="profile_pic",null=True,blank=True) 
+
+    # address
+   
+>>>>>>> Stashed changes
     role = models.CharField(max_length=20,choices=JOBROLE) # customer/serviceprovider
 
     is_active = models.BooleanField(default=True)
@@ -57,7 +69,24 @@ class Client(AbstractBaseUser, PermissionsMixin):
 
 
     USERNAME_FIELD = "email"
+<<<<<<< Updated upstream
     REQUIRED_FIELDS = ["email"]
 
     def __str__(self):
         return self.email
+=======
+    REQUIRED_FIELDS = []
+
+    def __str__(self):
+        return self.email
+
+# Later Profile Info for full kyc
+class ClientKyc(models.Model):
+
+    client = models.OneToOneField(Client,on_delete=models.CASCADE,null=False,blank=False)
+    state = models.CharField(max_length=50,null=False,blank=False)
+    city = models.CharField(max_length=50,null=False,blank=False)
+    street = models.CharField(max_length=100,null=False,blank=False)
+    pincode = models.CharField(max_length=10,null=True,blank=True)
+    contact = models.CharField(max_length=15,null=False,blank=False)
+>>>>>>> Stashed changes
