@@ -4,8 +4,9 @@ import Base from './layout/Base'
 import HeroSection from './pages/HomePage'
 
 import './App.css'
-import AuthForm from './assets/css/forms/Register'
-import LoginAuth from './assets/css/forms/Login'
+
+import AuthForm from './components/forms/customer/registration_form/Register'
+
 // customer
 import CustomerDashboardLayout from './layout/dashboard/CustomerDashboard'
 import CustomerDashboard from './pages/customer/Dashboard'
@@ -20,8 +21,7 @@ function App() {
       {/* BASE */}
       <Route path="/" element={<Base />}>
         <Route index element={<HeroSection/>}/>
-        <Route path="signup" element={<AuthForm/>}/>
-        <Route path="login" element={<LoginAuth/>}/>
+        <Route path="auth/:type" element={<AuthForm/>}/>
       </Route>
 
       {/* CUSTOMER */}
