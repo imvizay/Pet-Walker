@@ -17,9 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 
+from apps.users.views import user_signup
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('apps.job.routers')),
+    path('api/register/',user_signup)
 
    
    
