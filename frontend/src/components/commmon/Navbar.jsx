@@ -19,8 +19,8 @@ function Navbar() {
       </nav>
 
       <div className="navbarActions">
-        <Link className="btnPrimary" to="/signup">Sign Up</Link>
-        <Link className="btnSecondary" to="/login">Login</Link>
+        <Link className="btnPrimary" to="auth/register">Sign Up</Link>
+        <Link className="btnSecondary" to="auth/login">Login</Link>
       </div>
     </header>
   );
