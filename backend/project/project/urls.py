@@ -17,12 +17,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 
-from apps.users.views import user_signup
+from apps.users.views import user_signup,find_user
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('apps.job.routers')),
-    path('api/register/',user_signup)
+    path("api/myauth/",include("apps.myauth.urls")),
+    path('api/register/',user_signup),
+
+    path("api/auth/me/",find_user)
 
    
    

@@ -11,11 +11,11 @@ export default function GoogleLoginButton(){
     let { role } = useClienttRole()
     let navigate = useNavigate()
 
-    let handleSuccess = async (credentialResponse) => {
+    let handleSuccess = async (response) => {
 
         try{
-           let res = await axios.post(`http://localhost:8000/api/auth/google/`,{
-            access_token:credentialResponse.credential,
+           let res = await axios.post(`http://localhost:8000/api/myauth/google/`,{
+            token:response.credential,
             role:role,
            })
 

@@ -1,10 +1,8 @@
 
 
 from django.urls import path
-from apps.myauth.views import google_auth
+from apps.myauth.views import google_authentication
 
 urlpatterns = [
-    path('google/', google_auth, name="google-auth"),
-   
-
+    path('google/', google_authentication, name="google-auth"),
 ]
