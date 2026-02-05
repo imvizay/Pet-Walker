@@ -3,7 +3,7 @@
 import { useEffect,useState } from "react";
 
 export const useClienttRole = () => {
-    let [role,setRole] = useState("customer")
+    let [role,setRole] = useState("")
 
     useEffect(()=>{
 

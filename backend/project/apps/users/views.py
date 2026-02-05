@@ -20,6 +20,7 @@ def user_signup(request):
 
 from rest_framework.permissions import IsAuthenticated
 
+# current user
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def find_user(request):

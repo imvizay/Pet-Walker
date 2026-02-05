@@ -39,7 +39,7 @@ class Client(AbstractBaseUser, PermissionsMixin):
 
     # address
    
-    role = models.CharField(max_length=20,choices=JOBROLE) # customer/serviceprovider
+    role = models.JSONField(default=list) # customer/serviceprovider
 
     is_active = models.BooleanField(default=True)
 

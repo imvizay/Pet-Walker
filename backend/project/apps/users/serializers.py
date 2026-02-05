@@ -3,11 +3,13 @@
 from rest_framework.serializers import ModelSerializer
 from apps.users.models import Client
 from rest_framework import serializers
-
+from django.db import IntegrityError
+from rest_framework.exceptions import ValidationError
 import re
 
 class UserSerializer(ModelSerializer):
 
+    role = serializers.CharField(write_only=True)
     password = serializers.CharField(write_only=True)
 
 
@@ -22,12 +24,7 @@ class UserSerializer(ModelSerializer):
         
         if not any(value.endswith(domain) for domain in allowed_domain):
             raise serializers.ValidationError ("email must ends with @gmail.com/@hotmail.com")
-        
-        # Email should be unique
-
-        if Client.objects.filter(email=value).exists():
-            raise serializers.ValidationError("email with this account already exits.")
-        
+            
         # Email username before @gmail should be alphanumeric and not contains only digits 
 
         local_part = value.split("@")[0]
@@ -58,4 +55,39 @@ class UserSerializer(ModelSerializer):
 
     class Meta:
         model = Client
-        fields = ['id','username','email','password']
+        fields = ['id','username','email','password',"role"]
+        extra_kwargs = {"email" : {"validators" : []} }
+
+   
+
+    def create(self, validated_data):
+
+        role = validated_data.pop("role")
+        email = validated_data.get("email")
+
+        user = Client.objects.filter(email=email).first()
+
+        if user:
+
+            if role in user.role:
+                raise ValidationError({"role":f"email with the selected role({role}) already exists."})
+            
+            user.role.append(role)
+            user.save()
+            return user
+
+        try:
+            user = Client.objects.create_user(**validated_data)
+            user.role = [role]
+            user.save()
+            return user
+
+        except IntegrityError:
+            # Edge case: two requests at same time
+            user = Client.objects.get(email=email)
+            if role not in user.role:
+                user.role.append(role)
+                user.save()
+            return user
+
+

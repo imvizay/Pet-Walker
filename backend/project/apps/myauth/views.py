@@ -9,11 +9,12 @@ from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 
-User = get_user_model()
 
+
+# GOOGLE OAUTH-2 VIEW
+User = get_user_model()
 GOOGLE_CID = "896067105432-mmaaq34vcggd59dfm6tbrvf37n2uv2f2.apps.googleusercontent.com"
 
-# Create your views here.
 @api_view(["POST"])
 def google_authentication(request):
     token = request.data.get("token")
@@ -54,4 +55,4 @@ def google_authentication(request):
 
 
 
-
+# CUSTOM LOGIN VIEW 

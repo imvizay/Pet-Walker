@@ -9,14 +9,36 @@ export const createUser = async (userData) => {
 
     const res = await api.post("/register/", userData)
     console.log("Registered users:", res.data)
-    return res.data
+    return {
+      success:true,
+      data:res?.data
+    }
 
   } catch (error) {
 
     console.log(error?.response?.data)
-    throw new Error("Creating new user failed")
+    alert("account with this email already exists.")
+    return {
+      success:false,
+      error:error?.response?.data
+    }
 
   }
 }
 
 
+
+// GENERATE JWT-TOKEN FOR USER ALREADY REGISTERED
+
+export const loginUser = async (data) => {
+  try {
+    const res = await api.post("myauth/login/", data);
+    return { success: true, data: res.data };
+  } catch (err) {
+    console.log(err.response?.data)
+    return {
+      success: false,
+      error: err.response?.data
+    }
+  }
+}

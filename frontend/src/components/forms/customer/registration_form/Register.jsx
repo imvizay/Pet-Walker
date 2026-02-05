@@ -1,19 +1,13 @@
-import { useState } from "react";
-// routing
+import { useEffect, useState } from "react";
 import { useParams, Navigate } from "react-router-dom";
-// css
 import '../../../../assets/css/auth/register.css'
-// icons
+
 import { PawPrint, Briefcase, Share2 } from "lucide-react";
-// component
 import GoogleLoginButton from "../../../google/GoogleButton";
-import { useClienttRole } from "../../../../hooks/ClientRoleManager";
 
-// api calls
-import { createUser } from "../../../../api/auth";
-
-
-
+import { createUser, loginUser } from "../../../../api/auth";
+import { accountRegistrationVal } from "../../../../utilis/validate_registration";
+import fetchCurrentUser from "../../../../api/currentuser";
 
 
 const AUTH_CONFIG = {
@@ -32,132 +26,189 @@ const AUTH_CONFIG = {
     showRole: true,
     showSocial: true,
     footer: true
-  },
-  reset: {
-    title: "Reset Password",
-    subtitle: "Enter your email to receive reset instructions.",
-    fields: ["email"],
-    buttonText: "Send Reset Link",
-    showSocial: false
-  },
-  otp: {
-    title: "Verify OTP",
-    subtitle: "Enter the 6-digit code sent to your email.",
-    fields: ["otp"],
-    buttonText: "Verify",
-    showSocial: false
   }
-}
+};
 
 function AuthForm() {
 
-  let { type } = useParams();
-  let config = AUTH_CONFIG[type];
-  let { role, setRole } = useClienttRole();
+  const { type } = useParams();
+  const config = AUTH_CONFIG[type];
 
-  const [regDetail,setRegDetail] = useState({
-    role: "" || role,
-    username:"",
-    email:"",
-    password:""
+  const emptyLogin = { email:"", password:"" }
+  const emptyRegister = { username:"", email:"", password:"" }
 
-  })
+  const [errors,setErrors] = useState({});
+  const [role,setRole] = useState("customer");
+  const [loginData,setLoginData] = useState(emptyLogin);
+  const [regDetail,setRegDetail] = useState(emptyRegister);
 
-  // Display login form for invalid routes
   if (!config) return <Navigate to="/auth/login" />;
 
-  
-  let handleInputField = (e) => {
-    let {name,value} = e.target
-    setRegDetail((prev)=>({...prev,[name]:value}))
-  }
+  // ---------------- INPUT HANDLER ----------------
+  const handleInputField = (e)=>{
+    const {name,value} = e.target;
 
-
-  
-  const actionMap = {
-    register:createUser,
-  }
-
-  // Submit function
-  let handleSubmit = (type) => {
-    
-
-    if(type=="register") {
-      let errors = accountRegistrationVal(regDetail)
-
-      if(Object.keys(errors).length>0){
-        console.log(errors)
-        return;
-      }
-
-      let action = actionMap(type)
-
-      if(action){
-        action(regDetail)
-      }
-      return alert("user created successfully")
+    if(type==="login"){
+      setLoginData(prev=>({...prev,[name]:value}))
+    }else{
+      setRegDetail(prev=>({...prev,[name]:value}))
     }
 
+    setErrors(prev=>{
+      const copy={...prev}
+      delete copy[name]
+      return copy
+    })
   }
 
+  // ---------------- SUBMIT ----------------
+  const handleSubmit = async ()=>{
 
+    // LOGIN
+    if(type==="login"){
+      const result = await loginUser(loginData)
 
+      if(!result.success){
+        setErrors(result.error || {})
+        return
+      }
 
+      localStorage.setItem("accessToken",result.data.access)
+      localStorage.setItem("refresh",result.data.refresh)
+
+      await fetchCurrentUser()
+      alert("Logged in successfully")
+      return
+    }
+
+    // REGISTER
+    if(type==="register"){
+
+      const validation = accountRegistrationVal(regDetail)
+
+      if(Object.keys(validation).length){
+        setErrors(validation)
+        return
+      }
+
+      const result = await createUser({
+        ...regDetail,
+        role
+      })
+
+      if(!result.success){
+        setErrors(result.errors || {})
+        return
+      }
+
+      alert("User created successfully")
+    }
+  }
+
+  // ---------------- RESET WHEN MODE CHANGES ----------------
+  useEffect(()=>{
+    setErrors({})
+    setLoginData(emptyLogin)
+    setRegDetail(emptyRegister)
+  },[type])
+
+  // ---------------- RENDER ----------------
   return (
     <div className="authPage">
       <div className="authCard">
+
         <h1>{config.title}</h1>
         <p className="authSubtitle">{config.subtitle}</p>
 
         {config.showRole && (
           <div className="roleSelector">
+
             <button
-              className={`roleBtn ${role === "customer" ? "activeRole" : ""}`}
-              onClick={() => setRole("customer")}
+              className={`roleBtn ${role==="customer"?"activeRole":""}`}
+              onClick={()=>setRole("customer")}
             >
-              <PawPrint size={18} /> Pet Owner
+              <PawPrint size={18}/> Pet Owner
             </button>
+
             <button
-              className={`roleBtn ${role === "provider" ? "activeRole" : ""}`}
-              onClick={() => setRole("provider")}
+              className={`roleBtn ${role==="provider"?"activeRole":""}`}
+              onClick={()=>setRole("provider")}
             >
-              <Briefcase size={18} /> Service Provider
+              <Briefcase size={18}/> Service Provider
             </button>
+
           </div>
         )}
 
         <div className="authFields">
-          {config.fields.map((field) => {
-            if (field === "name")
-              return <input key={field} type="text" placeholder="Full Name" name="username" value={regDetail.username || ""} onChange={handleInputField} />;
 
-            if (field === "email")
-              return <input key={field} type="email" placeholder="Email Address" name="email" value={regDetail.email}  onChange={handleInputField} />;
+          {config.fields.map(field=>{
 
-            if (field === "password")
-              return <input key={field} type="password" placeholder="Password" name="password" value={regDetail.password}  onChange={handleInputField} />;
+            if(field==="name")
+              return (
+                <div key={field} className="fieldBlock">
+                  <input
+                    type="text"
+                    name="username"
+                    placeholder="Full Name"
+                    value={regDetail.username}
+                    onChange={handleInputField}
+                  />
+                  {errors.username && <p className="fieldError">{errors.username}</p>}
+                </div>
+              )
 
-            if (field === "otp")
-              return <input key={field} type="text" placeholder="Enter OTP" />;
+            if(field==="email")
+              return (
+                <div key={field} className="fieldBlock">
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Email Address"
+                    value={type==="login" ? loginData.email : regDetail.email}
+                    onChange={handleInputField}
+                  />
+                  {errors.email && <p className="fieldError">{errors.email}</p>}
+                </div>
+              )
 
-            return null;
+            if(field==="password")
+              return (
+                <div key={field} className="fieldBlock">
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    value={type==="login" ? loginData.password : regDetail.password}
+                    onChange={handleInputField}
+                  />
+                  {errors.password && <p className="fieldError">{errors.password}</p>}
+                </div>
+              )
+
+            return null
           })}
+
         </div>
 
         {config.showSocial && (
           <>
             <div className="registerOption">
-              <span></span> OR CONTINUE WITH <span></span>
+              <span/> OR CONTINUE WITH <span/>
             </div>
 
             <div className="socialAuth">
-              <GoogleLoginButton />
-              <button><Share2 color="green" size={12}/> Facebook</button>
+              <GoogleLoginButton/>
+              <button>
+                <Share2 size={12}/> Facebook
+              </button>
             </div>
           </>
         )}
 
-        <button onClick={ () => handleSubmit(type)} className="authPrimaryBtn">
+        {errors.role && <p className="fieldError">{errors.role}</p>}
+
+        <button onClick={handleSubmit} className="authPrimaryBtn">
           {config.buttonText}
         </button>
 
@@ -167,9 +218,10 @@ function AuthForm() {
             <span> Terms of Service</span> and <span>Privacy Policy</span>.
           </p>
         )}
+
       </div>
     </div>
-  );
+  )
 }
 
 export default AuthForm;
