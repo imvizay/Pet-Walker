@@ -53,6 +53,14 @@ INSTALLED_APPS = [
 AUTH_USER_MODEL = 'users.Client'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+}
+
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',

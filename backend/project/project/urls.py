@@ -25,10 +25,5 @@ urlpatterns = [
     path('api/', include('apps.job.routers')),
     path("api/myauth/",include("apps.myauth.urls")),
     path('api/register/',user_signup),
-
     path("api/auth/me/",find_user)
-
-   
-   
-
 ]
