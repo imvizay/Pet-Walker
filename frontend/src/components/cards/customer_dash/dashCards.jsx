@@ -9,9 +9,9 @@ const CARD_TYPE = [
 function DashCards() {
   return (
     <>
-     <div className='dashCard'>
+    <div className='dashCard'>
     {CARD_TYPE.map((el)=>(
-     <div>
+     <div className='card'>
         <span className='title'>{el.name}</span>
         <span className={`number ${el.id==2 ? "application":""}`}>{el.length}</span>
      </div>

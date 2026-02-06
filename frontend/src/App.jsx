@@ -28,9 +28,10 @@ function App() {
       <Route path='customerDashboard' element={<CustomerDashboardLayout/>}>
 
         <Route index element={<CustomerDashboard/>}/>
+        
         <Route path='jobpost' element={<JobPostForm/>}/>
-        <Route path='searchProvider' element={<FindProviders/>}/>
 
+        <Route path='searchProvider' element={<FindProviders/>}/>
       </Route>
 
     </Routes>
