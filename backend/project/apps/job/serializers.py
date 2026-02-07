@@ -1,32 +1,20 @@
-from rest_framework.serializers import ModelSerializer
-
-from apps.job.models import Pet,PetBreed,PetType,JobPost
+from rest_framework import serializers
+from apps.users.models import Client
+from apps.job.models import PetBreed,PetType,PetJobPost
 
 # Read only 
-class PetTypeSerializer(ModelSerializer):
+class PetTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model= PetType
         fields = "__all__"
 
-class PetBreedSerializer(ModelSerializer):
+class PetBreedSerializer(serializers.ModelSerializer):
     class Meta:
         model= PetBreed
         fields = "__all__"
 
-class PetTypeSerializer(ModelSerializer):
-    class Meta:
-        model = PetType
-        fields = "__all__"
-
-
-
 # business logic
-class PetSerializer(ModelSerializer):
+class PetJobPost(serializers.ModelSerializer):
     class Meta:
-        model = Pet
-        fields= "__all__"
-
-class JobPostSerializer(ModelSerializer):
-    class Meta:
-        model = JobPost
+        model = PetJobPost
         fields ="__all__"

@@ -32,6 +32,7 @@ function App() {
         <Route path='jobpost' element={<JobPostForm/>}/>
 
         <Route path='searchProvider' element={<FindProviders/>}/>
+      
       </Route>
 
     </Routes>

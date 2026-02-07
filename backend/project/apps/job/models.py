@@ -42,81 +42,32 @@ class PetBreed(models.Model):
         return f"{self.breed_name} ({self.pet_type.pet_type})"
 
 
-class Pet(models.Model):
-    owner = models.ForeignKey(
-        Client,
-        on_delete=models.CASCADE,
-        related_name="pets",
-        null=True
-    )
+class PetJobPost(models.Model):
+    # basic info
+    owner = models.ForeignKey(Client,on_delete=models.CASCADE)
+    pet_profile = models.ImageField(upload_to='pet_profile')
+    pet_name = models.CharField(max_length=30)
+    pet_type = models.ForeignKey(PetType,on_delete=models.CASCADE) # fk
+    pet_breed = models.ForeignKey(PetBreed,on_delete=models.CASCADE) # fk
+    age = models.DecimalField(max_digits=3,decimal_places=1)
+    weight = models.DecimalField(max_digits=4,decimal_places=2)
+    gender = models.CharField(max_length=20)
+    
+    # time and date availability
+    job_date = models.DateField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()
 
-    name = models.CharField(max_length=50)
-    age = models.PositiveIntegerField()
+    # extra info
+    duration = models.TimeField()
+    service_type = models.CharField(max_length=30,choices=SERVICE_TYPE)
+    difficulty = models.CharField(max_length=30 )
 
-    pet_type = models.ForeignKey(PetType, on_delete=models.CASCADE,null=True)
+    description = models.CharField(max_length=300)
 
-    # supports pure + mixed breed
-    breeds = models.ManyToManyField(PetBreed, blank=True)
-    difficulty = models.CharField(max_length=20,blank=True,null=True)
+    is_vaccinated = models.BooleanField(default=False)
+    is_mixed_breed = models.BooleanField(default=False)
 
-    is_mixed = models.BooleanField(default=False)
+    
 
-    weight = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
-    notes = models.TextField(blank=True)
-
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"{self.name} ({self.pet_type})"
-
-
-class JobPost(models.Model):
-    posted_by = models.ForeignKey(
-        Client,
-        on_delete=models.CASCADE,
-        related_name="job_posts"
-    )
-
-    pet = models.ForeignKey(
-        Pet,
-        on_delete=models.CASCADE,
-        related_name="jobs",
-        null=True
-        
-    )
-
-    job_title = models.CharField(max_length=100)
-    job_description = models.TextField()
-
-
-    job_date = models.DateTimeField()
-    available_from = models.DateTimeField()
-    available_to = models.DateTimeField()
-
-    job_service = models.CharField(max_length=40,choices=SERVICE_TYPE)
-
-    job_duration = models.DecimalField(
-        max_digits=4,
-        decimal_places=2,
-        help_text="Duration in hours"
-    )
-
-    job_days = models.IntegerField(
-        validators=[MinValueValidator(1), MaxValueValidator(30)],
-        null=True,
-        blank=True
-    )
-
-    job_fare = models.DecimalField(max_digits=8, decimal_places=2)
-    location = models.CharField(max_length=100)
-
-    status = models.CharField(
-        max_length=20,
-        choices=JOB_STATUS,
-        default='active'
-    )
-
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.job_title
+    

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
-from apps.job.models import PetType,PetBreed,Pet,JobPost
+from apps.job.models import PetType,PetBreed,PetJobPost
 from rest_framework.viewsets import ReadOnlyModelViewSet
 from apps.job.serializers import *
 

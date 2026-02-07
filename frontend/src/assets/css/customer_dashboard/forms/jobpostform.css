@@ -1,3 +1,46 @@
+
+/* pet profile */
+.photoSection{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.photoSection img{
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.photoDisplay{
+  margin: 1rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  width: 100px;
+  border-radius: 50px;
+  border: 2px dotted gray;
+}
+.profile-cta{
+  margin: 0.4rem;
+  display: flex;
+  gap: 10px;
+}
+
+.profile-cta button,
+.profile-cta label{
+   color: white;
+  font-weight: 600;
+  border: none;
+  padding: 8px;
+}
+.profile-cta .upload-btn{
+  background-color: #5cff2e; 
+}
+.profile-cta .remove-btn{
+  background-color: red;
+}
 .jobFormCard {
   width: 360px;
   background: #ffffff;
@@ -34,7 +77,21 @@
   flex-direction: column;
   margin-bottom: 16px;
 }
-
+.ageGroup{
+  margin-bottom: 16px;
+  display: flex ;
+  justify-content: space-between;
+}
+.formGroup h4{
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid rgb(194, 194, 194);
+}
+.timeslot{
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem;
+}
 .formGroup label {
   font-size: 13px;
   color: #333;
@@ -55,6 +112,14 @@
 .formGroup select:focus {
   border-color: #5cff2e;
 }
+.formGroup .textarea{
+  padding: 0.4rem;
+  outline: none;
+}
+.requiredField{
+  color: red;
+}
+
 
 /* Services */
 .serviceGrid {

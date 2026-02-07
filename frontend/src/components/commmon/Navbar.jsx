@@ -47,7 +47,7 @@ function CustomerDashboardNavbar() {
         <NavLink to="" >Dashboard</NavLink>
         <NavLink to="jobpost">Jobs</NavLink>
         
-        <NavLink to="/customer/history">History</NavLink>
+        <NavLink to="history">History</NavLink>
       </div>
 
       <div className="cust_navRight">
