@@ -72,6 +72,30 @@
 }
 
 /* main body */
+
+/* Jobs */
+.myJobPost{
+  height: 60vh;
+  overflow-y: scroll;
+  display: grid;
+  grid-template-columns: 0.9fr;
+  gap: 10px;
+}
+.myJobPost::-webkit-scrollbar{
+  width: 4px;
+}
+.myJobPost::-webkit-scrollbar-track {
+  background: #0e1992;
+  border-radius: 10px;
+}
+.myJobPost::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg,#ff7a18,#ffb347);
+  border-radius: 10px;
+}
+.myJobPost::-webkit-scrollbar-thumb:hover {
+  background: #3bb110;
+}
+
 .customerIndexLeg {
   display: grid;
   grid-template-columns: 2fr 1fr;

@@ -1,14 +1,42 @@
-import React from 'react'
+import { useState ,useEffect} from 'react'
 import '../../assets/css/customer_dashboard/customer_dash.css'
 import { ArrowBigDown, FilterIcon, FilterX, Heart, IdCard, ListFilterIcon, Plus, Search } from 'lucide-react'
 import DashCards from '../../components/cards/customer_dash/dashCards'
 import JobPostCard from '../../components/cards/customer_dash/MyJobPost'
 
-
-import { Link } from 'react-router-dom'
+import { getJobs } from '../../api/customerApi/jobApi'
+import { capitalizeFirstChar } from '../../utilis/capitalize'
 
 function CustomerDashboard() {
 
+  const [user,setUser] = useState({})
+
+  
+  const [jobs,setJobs] = useState([])
+  const [errors,setErrors] = useState(null)
+  // GET JOBS FROM BACKEND
+  useEffect(()=>{
+
+    const user = JSON.parse(localStorage.getItem("user"))
+    if(!user){
+      setUser({})
+    }
+    setUser(user)
+
+    const fetchJobs = async () => {
+          const results = await getJobs()
+
+          if(!results.success){
+            setErrors(results.error);
+            return;
+          }
+          setJobs(results.data)
+    }
+
+    fetchJobs()
+  },[])
+
+  console.log(jobs)
 
 
   return (
@@ -17,7 +45,7 @@ function CustomerDashboard() {
     <div className='customerIndexPageContainer'>
 
       <div className='customerIndexHead'>
-        <h1>WELCOME BACK , Vizay !</h1>
+        <h1>WELCOME BACK ,<span className='userSpan' style={{color:"green"}}>{capitalizeFirstChar(user.username)}</span></h1>
 
         <div className='searchBox'>
           <span className='searchIcon'><Search/></span>
@@ -28,14 +56,14 @@ function CustomerDashboard() {
 
       <div className='threeBoxes'>
       
-          <DashCards/>
+          <DashCards />
       
       </div>
 
       <div className='customerIndexLeg'>
 
         <div className='myJobPost'>
-          <JobPostCard/>
+          <JobPostCard jobs={jobs}/>
         </div>
 
         <div className='platformServices'>

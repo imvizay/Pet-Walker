@@ -16,7 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-
+from django.conf.urls.static import static
+from django.conf import settings
 from apps.users.views import user_signup,find_user
 
 
@@ -26,4 +27,7 @@ urlpatterns = [
     path("api/myauth/",include("apps.myauth.urls")),
     path('api/register/',user_signup),
     path("api/auth/me/",find_user)
-]
+
+] + static( settings.MEDIA_URL,
+            document_root = settings.MEDIA_ROOT )
+ 

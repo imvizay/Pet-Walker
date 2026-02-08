@@ -3,7 +3,6 @@ import axios from "axios";
 import api from "../axios";
 
 
-export const createPet = (petData) => api.post("/pet-profile/",petData)
 
 export const getPet = () => api.get('/all-pets/')
 export const updatePet = (id) => api.get(`/pet/update/${id}`)

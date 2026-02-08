@@ -5,92 +5,159 @@ import '../../../assets/css/customer_dashboard/forms/jobpostform.css'
 import { getPetTypes,getPetBreeds } from "../../../api/customerApi/petApi";
 import { CameraIcon } from "lucide-react";
 
-function JobPostForm() {
+import { validateJobForm } from "../../../utilis/validate_jobform";
+import { createJob } from "../../../api/customerApi/jobApi";
 
-  const [payload,setPayload] = useState({
-
+const INITIAL_PAYLOAD = { 
     owner:1,
-    profile_pic:"",
     pet_name:"",
     pet_type:"",
     pet_breed:"",
-
     age:"",
     weight:"",
-    gender:"",
-
+    gender:"male",
     job_date:"",
     start_time:"",
     end_time:"",
-    duration:"",
-    service_type:"",
-    difficulty:"",
+    service_type:"walking",
+    difficulty:"normal",
     description:"",
     is_vaccinated:false,
     is_mixed_breed:false
+  }
 
-  })
+function JobPostForm() {
 
-  const [preview,setPreview] = useState(null)
-  const [photo,setPhoto] = useState(null)
+  const fileInputRef = useRef();
 
-  const [service, setService] = useState("");
+  const [errors,setErrors] = useState({});
+  const [preview,setPreview] = useState(null);
+  const [photo,setPhoto] = useState(null);
 
-  const [petTypeList,setPetTypeList] = useState([])
-  const [petBreedList,setBreedList] = useState([])
-  const [selectedPetId,setSelectedPetId] = useState(null)
-  const [selectedBreed,setSelectedBreed] = useState("")
+  const [petTypeList,setPetTypeList] = useState([]);
+  const [petBreedList,setBreedList] = useState([]);
+  
+  const [selectedPetId,setSelectedPetId] = useState(null);
 
-  let fileInputRef = useRef()
+  const [payload,setPayload] = useState(INITIAL_PAYLOAD);
 
+  // ================= FETCH TYPES =================
+  useEffect(()=>{
+    getPetTypes()
+      .then(res=>setPetTypeList(res.data))
+      .catch(console.error)
+  },[])
 
-  // side effect for pet category
-  useEffect(() => {
-      getPetTypes()
-       .then(res => {
-          console.log("PET TYPE RES :", res.data)
-          setPetTypeList(res.data)
-      })
-       .catch(err => console.error(err))
-  }, [])
-
-  // dependent side effect on pet category to fetch pet breeds
+  // ================= FETCH BREEDS =================
   useEffect(()=>{
     if(!selectedPetId){
       setBreedList([])
       return
     }
     getPetBreeds(selectedPetId)
-    .then((res)=>{
-      setBreedList(res.data)
-      console.log("PET BREED RS :",res.data)
-    })
-    .catch(error=>console.log(error))
+      .then(res=>setBreedList(res.data))
+      .catch(console.error)
   },[selectedPetId])
 
 
-
+  // ================= INPUT HANDLER =================
   function handleInput(e){
+    const {name,value,type,checked} = e.target
 
-  }
-  function handleFile(e){
-    let file = e.target.files[0]
+    let parsedValue = value
 
-    if(file){
-      setPreview(URL.createObjectURL(file))
-      setPhoto(file)
-      return
+    if(type === "number"){
+      parsedValue = value === "" ? "" : parseFloat(value)
     }
-    return alert("setting pet profile pic goes failed! Try again!...")
+
+    if(type === "checkbox"){
+      parsedValue = checked
+    }
+
+    setPayload(prev=>({
+      ...prev,
+      [name]:parsedValue
+    }))
+  }
+
+  // ================= FILE =================
+  function handleFile(e){
+    const file = e.target.files[0]
+    if(!file) return
+    setPhoto(file)
+    setPreview(URL.createObjectURL(file))
   }
 
   function handleRemove(){
-      setPreview(()=>null)
-      setPhoto(()=>null)
+    setPreview(null)
+    setPhoto(null)
+    if(fileInputRef.current){
+      fileInputRef.current.value=""
+    }
+  }
 
-      if(fileInputRef.current){
-        fileInputRef.current.value = ""
+  // ============ HANDLE SERVICE ===============
+  const handleServiceClick = (e) => {
+    let btnTrigger = e.target.closest("button")
+    if(!btnTrigger) return
+
+    let selected = btnTrigger.dataset.service
+
+    setPayload(prev=>({
+      ...prev,
+      service_type:selected
+    }))
+
+  }
+
+  // ================= SUBMIT =================
+  async function handleSubmit(e){
+    e.preventDefault()
+
+    const results = validateJobForm(payload)
+
+    if(Object.keys(results).length){
+      setErrors(results)
+      alert("Validation Failed")
+      return
+    }
+
+    try{
+      const formData = new FormData()
+
+      Object.entries(payload).forEach(([k,v])=>{
+        if(k !== "pet_profile"){
+           formData.append(k,v)
+        }
+       
+      })
+
+      if(photo){
+        console.log("photo",photo)
+        formData.append("pet_profile",photo)
       }
+
+      for (let pair of formData.entries()) {
+        console.log(pair[0], pair[1]);
+      }
+
+      let result = await createJob(formData)
+
+      if (!result.success) {
+        setErrors(result.error)
+        alert("job creation failed")
+        console.log(errors)
+        return
+      }
+
+      setPayload(INITIAL_PAYLOAD)
+      setErrors({})
+      alert("Job Created Successfully")
+      
+
+    }catch(err){
+      console.log(err?.response?.data || err)
+    }
   }
 
   return (
@@ -114,25 +181,32 @@ function JobPostForm() {
            </div>
           )
         }
-
+      {/* PET PROFILE PIC */}
         <div className="profile-cta">
           <label className="upload-btn">Upload <input ref={fileInputRef} type="file" hidden onChange={handleFile} /></label>
           <button className="remove-btn" onClick={handleRemove}>Remove</button>
         </div>
       </div>
-
+      
+      {/* PET NAME */}
       <div className="formGroup">
         <h4>General Info</h4>
         <label>Pet Name <span className="requiredField">*</span></label>
         <input type="text" placeholder="e.g. Buddy"
           onChange={handleInput}
           name="pet_name"
+          value={payload.pet_name}
         />
       </div>
 
+        {/* PET TYPE */}
       <div className="formGroup">
         <label>Pet Type <span className="requiredField">*</span> </label>
-        <select onChange={(e)=>setSelectedPetId(e.target.value)} name="pet_category">
+        <select onChange={(e)=>{
+          handleInput(e)
+          setSelectedPetId(e.target.value)
+        }} 
+        name="pet_type" value={payload.pet_type}>
           <option value="">Select pet type</option>
          {petTypeList.map((el)=>(
           <option key={el.id} value={el.id}>{el.pet_type}</option>
@@ -140,9 +214,10 @@ function JobPostForm() {
         </select>
       </div>
 
+      {/* PET BREED */}
       <div className="formGroup">
         <label>Breed <span className="requiredField">*</span> </label>
-        <select disabled={!selectedPetId} name="pet_breed">
+        <select onChange={handleInput} disabled={!selectedPetId} name="pet_breed" value={payload.pet_breed}>
           <option value=""  >Select breed</option>
           {petBreedList.map((el)=>(
             <option value={el.id}>{el.breed_name}</option>
@@ -150,21 +225,23 @@ function JobPostForm() {
         </select>
 
       </div>
-
+      {/* PET AGE */}
       <div className="ageGroup">
         <div className="formGroup">
           <label>Age(years) <span className="requiredField">*</span></label>
-          <input type="number" min={0} max={50} step={0.1} placeholder="02.2 "/>
+          <input onChange={handleInput} name="age" value={payload.age} type="number" min={0} max={50} step={0.1} placeholder="02.2 "/>
         </div>
 
+      {/* PET WEIGHT */}
         <div className="formGroup">
           <label htmlFor="">Weight(kg)</label>
-          <input type="number" min={0} max={100} step={0.01} placeholder="15.12" />
+          <input onChange={handleInput} name="weight" value={payload.weight} type="number" min={0} max={100} step={0.01} placeholder="15.12" />
         </div>
-
+      
+      {/* PET GENDER */}
         <div className="formGroup">
-          <label htmlFor="">Gender</label>
-          <select>
+          <label >Gender</label>
+          <select onChange={handleInput} name="gender" value={payload.gender}>
             <option value="male">Male</option>
             <option value="female">Female</option>
 
@@ -172,80 +249,85 @@ function JobPostForm() {
         </div>
 
       </div>
-
+      
+      {/* DATE & TIME */}
       <div className="formGroup">
         <h4>Date & Time <span className="requiredField">*</span></h4>
         <div>
           <label>When do you need help?</label>
-          <input onChange={handleInput} name="date_of_availability" type="date" />
+          <input  onChange={handleInput} name="job_date" value={payload.job_date} type="date" />
         </div>
-
+      
+      {/* START TIME */}
        <div className="timeslot">
            <div>
               <label>Start Time</label>
-              <input onChange={handleInput} name="time_availability" type="time" />
+              <input onChange={handleInput} name="start_time" value={payload.start_time} type="time" />
           </div>
 
+      {/* END TIME */}
           <div>
               <label>End Time</label>
-              <input onChange={handleInput} name="time_availability" type="time" />
+              <input onChange={handleInput} name="end_time" value={payload.end_time} type="time" />
           </div>
        </div>
       </div>
-
+      
+      {/* SERVICE */}
       <div className="formGroup">
         <h4>Service Info <span className="requiredField">*</span></h4>
         <label>Select a service </label>
 
-        <div className="serviceGrid">
-          <button 
-            className={`serviceBtn ${service === "walking" ? "active" : ""}`}
-            onClick={() => setService("walking")}
+        <div className="serviceGrid" onClick={handleServiceClick}>
+          <button
+            data-service="walking"
+            className={`serviceBtn ${payload.service_type === "walking" ? "active" : ""}`}
           >
             Walking
           </button>
 
-          <button 
-            className={`serviceBtn ${service === "sitting" ? "active" : ""}`}
-            onClick={() => setService("sitting")}
+          <button
+            data-service="sitting"
+            className={`serviceBtn ${payload.service_type === "sitting" ? "active" : ""}`}
           >
             Sitting
           </button>
 
-          <button 
-            className={`serviceBtn ${service === "grooming" ? "active" : ""}`}
-            onClick={() => setService("grooming")}
+          <button
+            data-service="grooming"
+            className={`serviceBtn ${payload.service_type === "grooming" ? "active" : ""}`}
           >
             Grooming
           </button>
 
-          <button 
-            className={`serviceBtn ${service === "care" ? "active" : ""}`}
-            onClick={() => setService("care")}
-          >
-            Care
+          <button
+            data-service="care"
+            className={`serviceBtn ${payload.service_type === "care" ? "active" : ""}`}
+          > 
+          Care 
           </button>
         </div>
-      </div>
 
+      </div>
+      
+      {/* DIFFICULTY */}
       <div className="formGroup">
         <h4>Pet Behaviour <span className="requiredField">*</span> </h4>
         <label>Pet Difficulty Level </label>
-        <select name="pet_difficulty">
+        <select onChange={handleInput} name="difficulty" value={payload.difficulty}>
           <option value="normal">Normal</option>
-          <option value="average">Average</option>
-          <option value="severe">Severe</option>
-
+          <option value="moderate">Moderate</option>
+          <option value="high">High</option>
         </select>
-
       </div>
-
+      
+      {/* DESCRIPTION */}
       <div className="formGroup">
         <h4>Note</h4>
-        <textarea className="textarea" onChange={handleInput} name="description" placeholder="brief note on something about the job or pet...(optional)" rows={4} maxLength={80}></textarea>
+        <textarea  className="textarea" value={payload.description} onChange={handleInput} name="description" placeholder="brief note on something about the job or pet...(optional)" rows={4} maxLength={300}></textarea>
       </div>
 
-      <button className="submitBtn">
+      <button onClick={handleSubmit} className="submitBtn">
         Post This Job
       </button>
 

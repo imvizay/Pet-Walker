@@ -11,7 +11,7 @@ function DashCards() {
     <>
     <div className='dashCard'>
     {CARD_TYPE.map((el)=>(
-     <div className='card'>
+     <div className='card' key={el.id}>
         <span className='title'>{el.name}</span>
         <span className={`number ${el.id==2 ? "application":""}`}>{el.length}</span>
      </div>

@@ -42,7 +42,7 @@ class PetBreed(models.Model):
         return f"{self.breed_name} ({self.pet_type.pet_type})"
 
 
-class PetJobPost(models.Model):
+class MyJobPost(models.Model):
     # basic info
     owner = models.ForeignKey(Client,on_delete=models.CASCADE)
     pet_profile = models.ImageField(upload_to='pet_profile')
@@ -59,7 +59,6 @@ class PetJobPost(models.Model):
     end_time = models.TimeField()
 
     # extra info
-    duration = models.TimeField()
     service_type = models.CharField(max_length=30,choices=SERVICE_TYPE)
     difficulty = models.CharField(max_length=30 )
 
