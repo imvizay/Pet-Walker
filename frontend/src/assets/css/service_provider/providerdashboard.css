@@ -1,0 +1,318 @@
+/* =========================
+GLOBAL LAYOUT
+========================= */
+
+.dashboardLayout{
+  display:grid;
+  grid-template-columns:240px 1fr;
+  min-height:100vh;
+  background:#f5f7fa;
+  font-family:system-ui;
+}
+
+.dashboardMain{
+  padding:28px;
+}
+
+.dashboardGrid{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:24px;
+}
+
+.leftColumn,
+.rightColumn{
+  display:flex;
+  flex-direction:column;
+  gap:24px;
+  height: 80vh;
+}
+
+/* =========================
+SIDEBAR
+========================= */
+
+.sidebar{
+  background:white;
+  padding:22px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  box-shadow:4px 0 12px rgba(0,0,0,.05);
+}
+.sidebar div p{
+    font-size: 10px;
+    text-align: start;
+    padding-left: 10px;
+    text-transform: uppercase;
+}
+.logoText{
+  font-size:22px;
+  font-weight:700;
+}
+
+.navLinks{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.navLinks .link{
+  background:none;
+  text-decoration: none;
+  border:none;
+  text-align:left;
+  padding:10px;
+  border-radius:8px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.navLinks .link:hover{
+  background:#eef3f1;
+}
+
+.newServiceBtn{
+  background:#27c46b;
+  color:white;
+  border:none;
+  padding:12px;
+  border-radius:10px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+/* =========================
+HEADER
+========================= */
+
+.headerWrapper{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
+}
+
+.headerInfo h2{
+  font-size:24px;
+}
+
+.headerInfo p{
+    font-size: 12px;
+    color: #27c46b94;
+}
+.headerActions{
+  display:flex;
+  gap:14px;
+}
+
+.iconButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border: 1px solid gray;
+    padding: 5px;
+    border-radius: 50%;
+}
+/* active notification */
+/* .notification{
+    width: 20px;
+    height: 20px;
+    border: 2px solid red;
+    background-color: white;
+    color: red;
+} */
+
+/* =========================
+CARDS
+========================= */
+
+.cardContainer,
+.profileCard,
+.subscriptionCard{
+  background:white;
+  border-radius:16px;
+  padding:18px;
+  box-shadow:0 10px 22px rgba(0,0,0,.06);
+}
+
+/* =========================
+PROFILE
+========================= */
+
+.profileHeader{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+.profileAvatar{
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+.profileMeta{
+  flex:1;
+}
+
+.editProfileButton{
+  background:#e8f5ee;
+  border:none;
+  padding:8px 14px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.statsRow{
+  display:flex;
+  gap:14px;
+  margin-top:16px;
+}
+
+/* =========================
+SERVICES
+========================= */
+
+.serviceCardContainer{
+    height: 50vh;
+    width: 100%;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.226);
+}
+.serviceCardContainer h3{
+    padding-left: 12px;
+    padding-top: 12px;
+}
+
+.serviceItem{
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px;
+  border-bottom:1px solid #eee;
+}
+
+.serviceInfo{
+  display:flex;
+  flex-direction:column;
+}
+
+.serviceTitle{
+  font-weight:600;
+}
+
+.servicePrice{
+  font-size:13px;
+  color:#777;
+}
+
+/* Toggle */
+
+.toggleSwitch{
+  width:40px;
+  height:20px;
+  border-radius:20px;
+  background:#ddd;
+  position:relative;
+}
+
+.toggleSwitch::after{
+  content:"";
+  width:16px;
+  height:16px;
+  background:white;
+  border-radius:50%;
+  position:absolute;
+  top:2px;
+  left:2px;
+  transition:.2s;
+}
+
+.toggleOn{
+  background:#27c46b;
+}
+
+.toggleOn::after{
+  left:22px;
+}
+
+/* =========================
+SUBSCRIPTION
+========================= */
+
+.subscriptionCard{
+  background:linear-gradient(140deg,#0c1f12,#0f2d17);
+  color:white;
+}
+
+.subscriptionTitle{
+  font-size:12px;
+  opacity:.7;
+}
+
+.subscriptionPlan{
+  font-size:24px;
+  font-weight:700;
+  margin:6px 0;
+}
+
+.subscriptionText{
+  font-size:13px;
+  opacity:.8;
+}
+
+.upgradeButton{
+  margin-top:12px;
+  background:#2dff77;
+  border:none;
+  padding:10px;
+  border-radius:10px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+/* =========================
+ACTIVITY
+========================= */
+
+.activityContainer{
+    height: 50vh;
+    padding: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.269);
+    width: 100%;
+    overflow-y: scroll;
+}
+
+.activityWrapper{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  
+}
+
+.activityCard{
+  padding:10px 0;
+  border-bottom:1px solid #aaaaaa;
+}
+
+.activityLabelRow{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.activityDot{
+  width:8px;
+  height:8px;
+  background:#27c46b;
+  border-radius:50%;
+}
+
+.activityMeta{
+  font-size:12px;
+  color:#777;
+}

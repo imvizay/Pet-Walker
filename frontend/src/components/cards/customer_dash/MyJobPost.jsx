@@ -2,13 +2,16 @@
 import { ArrowRight } from "lucide-react"
 
 import { capitalizeEachWord,capitalizeFirstChar } from "../../../utilis/capitalize"
+import { Link } from "lucide-react"
+import { useNavigate } from "react-router-dom"
 
 export default function JobPostCard({ jobs }) {
+
+  const navigate = useNavigate()
 
   if(!jobs || jobs.length === 0){
     return <p>No jobs posted yet</p>
   }
-
 
 
   return (
@@ -47,7 +50,7 @@ export default function JobPostCard({ jobs }) {
             </p>
 
             <div className="jobFooter">
-              <button className="manageBtn">Manage</button>
+              <button className="manageBtn" onClick={()=>navigate(`manage/${job.id}`)}>Manage</button>
             </div>
 
           </div>

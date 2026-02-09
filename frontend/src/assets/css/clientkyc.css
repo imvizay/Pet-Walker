@@ -1,0 +1,161 @@
+/* ---------- Layout ---------- */
+
+.kyc-container{
+    max-width:880px;
+    margin:40px auto;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto;
+}
+
+/* ---------- Header ---------- */
+
+.kyc-header h2{
+    font-size:24px;
+    font-weight:700;
+    color:#111827;
+    margin-bottom:4px;
+}
+
+.kyc-header p{
+    color:#6b7280;
+    margin-bottom:24px;
+}
+
+
+/* ---------- Card ---------- */
+
+.kyc-card{
+    background:#ffffff;
+    border:1px solid #e5e7eb;
+    border-radius:12px;
+    padding:24px;
+    margin-bottom:18px;
+}
+
+/* ---------- Avatar ---------- */
+
+.profile-card{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.avatar-area{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+}
+
+.avatar-area img{
+    width:84px;
+    height:84px;
+    border-radius:50%;
+    object-fit:cover;
+    border:2px solid #e5e7eb;
+}
+
+.avatar-area input{
+    font-size:12px;
+}
+
+/* ---------- Form ---------- */
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+}
+
+.field{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.field.full{
+    grid-column:span 2;
+}
+
+label{
+    font-size:13px;
+    font-weight:600;
+    color:#374151;
+}
+
+/* ---------- Inputs ---------- */
+
+input{
+    padding:11px 12px;
+    border-radius:8px;
+    border:1px solid #d1d5db;
+    background:white;
+    font-size:14px;
+    transition: all 0.15s ease;
+}
+
+input::placeholder{
+    color:#9ca3af;
+}
+
+input:focus{
+    border-color:#2563eb;
+    box-shadow:0 0 0 2px rgba(37,99,235,0.15);
+    outline:none;
+}
+
+/* ---------- Buttons ---------- */
+
+.kycActionButtons{
+    margin-top:18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.extraActions{
+    display:flex;
+    gap:10px;
+}
+
+button{
+    border:none;
+    border-radius:8px;
+    padding:10px 16px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+/* secondary buttons */
+
+.discardBtn{
+    background:#afafaf;
+    color:#374151;
+    transition: 0.3s ease;
+}
+.discardBtn:hover{
+    background-color: #374151 ;
+    color: #afafaf ;
+}
+
+.cancelBtn{
+    background:#fee2e2;
+    color:#991b1b;
+    transition: 0.3s ease;
+}
+.cancelBtn:hover{
+    background-color:#991b1b ;
+    color: #fee2e2;
+}
+
+/* primary action */
+
+.save-btn{
+    background:#2563eb;
+    color:white;
+    padding:12px 20px;
+    font-size:14px;
+}
+
+.save-btn:hover{
+    background:#1d4ed8;
+}

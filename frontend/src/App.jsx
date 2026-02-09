@@ -13,7 +13,11 @@ import CustomerDashboard from './pages/customer/Dashboard'
 
 import JobPostForm from './components/forms/customer/JobPostForm'
 import FindProviders from './pages/customer/searchProvider/FindProvider'
+import ManagePost from './pages/customer/ManagePost'
 
+import ProviderDashboard from './layout/dashboard/ServiceProvider'
+import ClientProfileUpdate from './components/forms/client_kyc/KycForm'
+import Home from './components/providerDashboard/indexcomponent/Home'
 
 function App() {
   return (
@@ -25,14 +29,22 @@ function App() {
       </Route>
 
       {/* CUSTOMER */}
-      <Route path='customerDashboard' element={<CustomerDashboardLayout/>}>
-
+      <Route path='customer-dashboard' element={<CustomerDashboardLayout/>}>
         <Route index element={<CustomerDashboard/>}/>
         
         <Route path='jobpost' element={<JobPostForm/>}/>
-
         <Route path='searchProvider' element={<FindProviders/>}/>
-      
+        <Route path='manage/:id' element={<ManagePost/>}/>
+        <Route path='editpost/:id' element={<JobPostForm/>}/>
+
+      </Route>
+
+      {/* SERVICE PROVIDER */}
+
+      <Route path='service-provider' element={<ProviderDashboard/>}>
+        <Route index element={<Home/>}/>
+        <Route path='client-kyc/:id' element={<ClientProfileUpdate/>}/>
+
       </Route>
 
     </Routes>

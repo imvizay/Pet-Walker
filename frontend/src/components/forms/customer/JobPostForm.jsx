@@ -1,170 +1,163 @@
-import { useEffect, useState } from "react";
-import { useRef } from "react";
-import '../../../assets/css/customer_dashboard/forms/jobpostform.css'
+import { useEffect, useState, useRef } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
-import { getPetTypes,getPetBreeds } from "../../../api/customerApi/petApi";
-import { CameraIcon } from "lucide-react";
+import "../../../assets/css/customer_dashboard/forms/jobpostform.css";
+
+import { getPetTypes, getPetBreeds } from "../../../api/customerApi/petApi";
+import { createJob, getJobById, updateJob } from "../../../api/customerApi/jobApi";
 
 import { validateJobForm } from "../../../utilis/validate_jobform";
-import { createJob } from "../../../api/customerApi/jobApi";
+import { CameraIcon } from "lucide-react";
 
-const INITIAL_PAYLOAD = { 
-    owner:1,
-    pet_name:"",
-    pet_type:"",
-    pet_breed:"",
-    age:"",
-    weight:"",
-    gender:"male",
-    job_date:"",
-    start_time:"",
-    end_time:"",
-    service_type:"walking",
-    difficulty:"normal",
-    description:"",
-    is_vaccinated:false,
-    is_mixed_breed:false
-  }
+const INITIAL_PAYLOAD = {
+  owner: 1,
+  pet_name: "",
+  pet_type: "",
+  pet_breed: "",
+  age: "",
+  weight: "",
+  gender: "male",
+  job_date: "",
+  start_time: "",
+  end_time: "",
+  service_type: "walking",
+  difficulty: "normal",
+  description: "",
+  is_vaccinated: false,
+  is_mixed_breed: false
+};
 
 function JobPostForm() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const isEdit = Boolean(id);
 
   const fileInputRef = useRef();
 
-  const [errors,setErrors] = useState({});
-  const [preview,setPreview] = useState(null);
-  const [photo,setPhoto] = useState(null);
+  const [payload, setPayload] = useState(INITIAL_PAYLOAD);
+  const [preview, setPreview] = useState(null);
+  const [photo, setPhoto] = useState(null);
 
-  const [petTypeList,setPetTypeList] = useState([]);
-  const [petBreedList,setBreedList] = useState([]);
-  
-  const [selectedPetId,setSelectedPetId] = useState(null);
+  const [petTypeList, setPetTypeList] = useState([]);
+  const [petBreedList, setBreedList] = useState([]);
+  const [selectedPetId, setSelectedPetId] = useState(null);
 
-  const [payload,setPayload] = useState(INITIAL_PAYLOAD);
+  const [errors, setErrors] = useState({});
 
-  // ================= FETCH TYPES =================
-  useEffect(()=>{
-    getPetTypes()
-      .then(res=>setPetTypeList(res.data))
-      .catch(console.error)
-  },[])
+  /* ================= TYPES ================= */
+  useEffect(() => {
+    getPetTypes().then(res => setPetTypeList(res.data));
+  }, []);
 
-  // ================= FETCH BREEDS =================
-  useEffect(()=>{
-    if(!selectedPetId){
-      setBreedList([])
-      return
-    }
-    getPetBreeds(selectedPetId)
-      .then(res=>setBreedList(res.data))
-      .catch(console.error)
-  },[selectedPetId])
+  /* ================= BREEDS ================= */
+  useEffect(() => {
+    if (!selectedPetId) return setBreedList([]);
+    getPetBreeds(selectedPetId).then(res => setBreedList(res.data));
+  }, [selectedPetId]);
+
+  /* ================= EDIT MODE LOAD ================= */
+  useEffect(() => {
+    if (!isEdit) return;
+
+    const loadJob = async () => {
+      const res = await getJobById(id);
+      if (!res.success) return;
+
+      const {pet_profile, ...rest} = res.data
+
+      setPayload(rest);
+      setSelectedPetId(res.data.pet_type);
+
+      if (res.data.pet_profile) {
+        setPreview(pet_profile);
+      }
+    };
+
+    loadJob();
+  }, [id]);
 
 
-  // ================= INPUT HANDLER =================
-  function handleInput(e){
-    const {name,value,type,checked} = e.target
+  /* ================= INPUT ================= */
+  function handleInput(e) {
+    const { name, value, type, checked } = e.target;
 
-    let parsedValue = value
+    let val = value;
+    if (type === "number") val = value === "" ? "" : parseFloat(value);
+    if (type === "checkbox") val = checked;
 
-    if(type === "number"){
-      parsedValue = value === "" ? "" : parseFloat(value)
-    }
-
-    if(type === "checkbox"){
-      parsedValue = checked
-    }
-
-    setPayload(prev=>({
-      ...prev,
-      [name]:parsedValue
-    }))
+    setPayload(prev => ({ ...prev, [name]: val }));
   }
 
-  // ================= FILE =================
-  function handleFile(e){
-    const file = e.target.files[0]
-    if(!file) return
-    setPhoto(file)
-    setPreview(URL.createObjectURL(file))
+  /* ================= FILE ================= */
+  function handleFile(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setPhoto(file);
+    setPreview(URL.createObjectURL(file));
   }
 
-  function handleRemove(){
-    setPreview(null)
-    setPhoto(null)
-    if(fileInputRef.current){
-      fileInputRef.current.value=""
-    }
+  function handleRemove() {
+    setPhoto(null);
+    setPreview(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
   }
 
-  // ============ HANDLE SERVICE ===============
-  const handleServiceClick = (e) => {
-    let btnTrigger = e.target.closest("button")
-    if(!btnTrigger) return
+  /* ================ SERVICE ================= */
+  function handleServiceClick(e){
+    let btn = e.target.closest("button")
+    let selected = btn.dataset.service
 
-    let selected = btnTrigger.dataset.service
-
-    setPayload(prev=>({
+    setPayload((prev)=>({
       ...prev,
       service_type:selected
     }))
-
+    
   }
 
-  // ================= SUBMIT =================
-  async function handleSubmit(e){
-    e.preventDefault()
+  /* ================= SUBMIT ================= */
+  async function handleSubmit(e) {
+    e.preventDefault();
 
-    const results = validateJobForm(payload)
+    const v = validateJobForm(payload);
+    if (Object.keys(v).length) {
+      setErrors(v);
+      console.log(errors)
+      return alert("Validation failed");
+    }
+    
+    const formData = new FormData();
 
-    if(Object.keys(results).length){
-      setErrors(results)
-      alert("Validation Failed")
-      return
+    Object.entries(payload).forEach(([k, v]) => {
+      if (k !== "pet_profile") formData.append(k, v);
+    });
+
+    if (photo) formData.append("pet_profile", photo);
+
+    let result;
+
+    if (isEdit) {
+      result = await updateJob(id, formData);
+    } else {
+      result = await createJob(formData);
     }
 
-    try{
-      const formData = new FormData()
-
-      Object.entries(payload).forEach(([k,v])=>{
-        if(k !== "pet_profile"){
-           formData.append(k,v)
-        }
-       
-      })
-
-      if(photo){
-        console.log("photo",photo)
-        formData.append("pet_profile",photo)
-      }
-
-      for (let pair of formData.entries()) {
-        console.log(pair[0], pair[1]);
-      }
-
-      let result = await createJob(formData)
-
-      if (!result.success) {
-        setErrors(result.error)
-        alert("job creation failed")
-        console.log(errors)
-        return
-      }
-
-      setPayload(INITIAL_PAYLOAD)
-      setErrors({})
-      alert("Job Created Successfully")
-      
-
-    }catch(err){
-      console.log(err?.response?.data || err)
+    if (!result.success) {
+      setErrors(result.error);
+      return alert("Operation failed");
     }
+
+    alert(isEdit ? "Updated!" : "Created!");
+
+    navigate("/customer-dashboard");
   }
+
 
   return (
     <div className="jobFormCard">
       
       <h3 className="formTitle">
-        <span className="plusIcon">+</span> Post a New Job
+        {isEdit ? "Edit Job Listing" : "Post a New Job"}
       </h3>
 
       <div className="photoSection">
@@ -328,7 +321,7 @@ function JobPostForm() {
       </div>
 
       <button onClick={handleSubmit} className="submitBtn">
-        Post This Job
+         {isEdit ? "Update Job" : "Create Job"}
       </button>
 
     </div>

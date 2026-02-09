@@ -1,7 +1,7 @@
 
 
 from rest_framework.serializers import ModelSerializer
-from apps.users.models import Client
+from apps.users.models import Client , ClientKyc
 from rest_framework import serializers
 from django.db import IntegrityError
 from rest_framework.exceptions import ValidationError
@@ -11,6 +11,9 @@ class UserSerializer(ModelSerializer):
 
     role = serializers.CharField(write_only=True)
     password = serializers.CharField(write_only=True)
+
+    profile_pic = serializers.ImageField(required=False,allow_null=True)
+    
 
 
     def validate_email(self,value):
@@ -55,7 +58,8 @@ class UserSerializer(ModelSerializer):
 
     class Meta:
         model = Client
-        fields = ['id','username','email','password',"role"]
+        fields = ['id',"profile_pic",'username','email','password',"role"]
+        
         extra_kwargs = {"email" : {"validators" : []} }
 
    
@@ -91,3 +95,12 @@ class UserSerializer(ModelSerializer):
             return user
 
 
+
+class ClientKycSerializer(serializers.ModelSerializer):
+
+    client = serializers.PrimaryKeyRelatedField(read_only=True)
+   
+
+    class Meta:
+        model = ClientKyc
+        fields = "__all__"

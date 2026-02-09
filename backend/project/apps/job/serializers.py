@@ -18,6 +18,8 @@ class PetBreedSerializer(serializers.ModelSerializer):
 
 class MyJobPostSerializer(serializers.ModelSerializer):
 
+    pet_profile =serializers.ImageField(required=False,allow_null=True)
+
     class Meta:
         model = MyJobPost
         fields = "__all__"
@@ -74,3 +76,13 @@ class MyJobPostSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(errors)
 
         return data
+    
+    # if profile provided use it otherwise keep existing one.
+    def update(self, instance, validated_data):
+
+        pet_profile = validated_data.get("pet_profile",None)
+
+        if pet_profile is None:
+            validated_data["pet_profile"] = instance.pet_profile
+
+        return super().update(instance, validated_data)

@@ -14,6 +14,7 @@ function CustomerDashboard() {
   
   const [jobs,setJobs] = useState([])
   const [errors,setErrors] = useState(null)
+
   // GET JOBS FROM BACKEND
   useEffect(()=>{
 
@@ -21,6 +22,7 @@ function CustomerDashboard() {
     if(!user){
       setUser({})
     }
+    
     setUser(user)
 
     const fetchJobs = async () => {

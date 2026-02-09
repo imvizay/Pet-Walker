@@ -66,4 +66,4 @@ class ClientKyc(models.Model):
     city = models.CharField(max_length=50,null=False,blank=False)
     street = models.CharField(max_length=100,null=False,blank=False)
     pincode = models.CharField(max_length=10,null=True,blank=True)
-    contact = models.CharField(max_length=15,null=False,blank=False)
+    contact = models.CharField(max_length=15,null=True,blank=True)
