@@ -1,6 +1,17 @@
 
+import { useEffect,useState } from "react";
 import { Link } from "react-router-dom";
+
+import { useNavigate } from "react-router-dom"
 function Sidebar(){
+  let navigate = useNavigate()
+
+  const [user,setUser] = useState({})
+
+  useEffect(()=>{
+    const user = JSON.parse(localStorage.getItem("user"))
+    setUser(user)
+  },[])
   return (
     <aside className="sidebar">
     <div>
@@ -9,14 +20,14 @@ function Sidebar(){
     </div>
 
       <nav className="navLinks">
-        <Link className="link">Dashboard</Link>
+        <Link className="link" to='/service-provider'>Dashboard</Link>
         <Link className="link">Search Jobs</Link>
 
         <Link className="link">Bookings</Link>
         <Link className="link">Messages</Link>
       </nav>
 
-      <button className="newServiceBtn">
+      <button onClick={()=>navigate(`service-panel/${user.id}/`)} className="newServiceBtn">
         + New Service
       </button>
     </aside>

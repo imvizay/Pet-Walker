@@ -12,7 +12,7 @@ class UserSerializer(ModelSerializer):
     role = serializers.CharField(write_only=True)
     password = serializers.CharField(write_only=True)
 
-    profile_pic = serializers.ImageField(required=False,allow_null=True)
+    profile_pic = serializers.ImageField(read_only=True)
     
 
 
@@ -96,11 +96,10 @@ class UserSerializer(ModelSerializer):
 
 
 
-class ClientKycSerializer(serializers.ModelSerializer):
-
+class ClientKycSerializer(serializers.ModelSerializer): 
+    contact = serializers.CharField(required=False,allow_null=True,default="n/a")
     client = serializers.PrimaryKeyRelatedField(read_only=True)
-   
-
+    
     class Meta:
         model = ClientKyc
         fields = "__all__"

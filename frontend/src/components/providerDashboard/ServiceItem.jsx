@@ -1,13 +1,16 @@
-function ServiceItem({ title, price, active }) {
-  return (
-    <div className="serviceItem">
-      <div className="serviceInfo">
-        <h4 className="serviceTitle">{title}</h4>
-        <span className="servicePrice">{price}/hour</span>
-      </div>
 
-      <div className={`toggleSwitch ${active ? "toggleOn":""}`}/>
-    </div>
+const SERVICES = ["walking",'sitter','grooming','training']
+function ServiceItem({hasSubscription=false,plan="free",isActive=false}) {
+
+  if (!isActive) return (
+  <div className="serviceItem">
+    <span>No Services Actived Right Now.</span>
+  </div>)
+
+  return (
+  <>
+    
+  </>
   );
 }
 export default ServiceItem;

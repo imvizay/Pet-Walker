@@ -1,6 +1,21 @@
 /* ---------- Layout ---------- */
 
+.backBtn{
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+
+    color: blue;
+    text-decoration: underline;
+    margin-bottom: 2rem;
+    background-color: none;
+    border: none;
+    padding: 0.8rem 2rem;
+
+}
 .kyc-container{
+    position: relative;
     max-width:880px;
     margin:40px auto;
     font-family: system-ui, -apple-system, Segoe UI, Roboto;

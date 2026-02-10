@@ -44,10 +44,10 @@ INSTALLED_APPS = [
 
     # petwalker project
     'apps.myauth',
-    'apps.hire',
     'apps.job',
     'apps.users',
-
+    'apps.subscription',
+    "django_cleanup",
     'corsheaders'
 ]
 

@@ -18,6 +18,7 @@ import ManagePost from './pages/customer/ManagePost'
 import ProviderDashboard from './layout/dashboard/ServiceProvider'
 import ClientProfileUpdate from './components/forms/client_kyc/KycForm'
 import Home from './components/providerDashboard/indexcomponent/Home'
+import ServicesPanel from './components/providerDashboard/service_profile/ServicePanel'
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
       <Route path='service-provider' element={<ProviderDashboard/>}>
         <Route index element={<Home/>}/>
         <Route path='client-kyc/:id' element={<ClientProfileUpdate/>}/>
+        <Route path='service-panel/:id' element = {<ServicesPanel/>}/>
 
       </Route>
 
