@@ -1,0 +1,110 @@
+.servicesContainer{
+    max-width:900px;
+    margin:auto;
+}
+
+/* HEADER */
+.servicesHeader{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:10px;
+}
+
+.servicesHeader h2{
+    font-size:26px;
+    font-weight:600;
+}
+
+/* PLAN BADGE */
+.planBadge{
+    padding:6px 14px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:600;
+}
+
+.planBadge.free{
+    background:#f3f4f6;
+    color:#555;
+}
+
+.planBadge.pro{
+    background:linear-gradient(135deg,#6366f1,#9333ea);
+    color:white;
+}
+
+/* DESC */
+.servicesDesc{
+    color:#6b7280;
+    margin-bottom:22px;
+}
+
+/* GRID */
+.servicesGrid{
+    display:grid;
+    gap:14px;
+}
+
+/* CARD */
+.serviceCard{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 22px;
+    border-radius:14px;
+    background:white;
+    box-shadow:0 2px 10px rgba(0,0,0,0.05);
+    border: 2px solid transparent;
+   
+}
+
+.serviceCard.active{
+    border:2px solid #6366f1;
+    background:linear-gradient(135deg,#eef2ff,#faf5ff);
+}
+.serviceCard.inactive{
+    pointer-events: none;
+    
+}
+
+/* TEXT */
+.serviceName{
+    font-size:17px;
+    font-weight:600;
+}
+
+.servicePrice{
+    font-size:14px;
+    color:#6b7280;
+}
+.toggleDot{
+    display: inline-flex;
+    height: 25px;
+    border: 1px solid rgb(201, 201, 201);
+    background-color: rgb(234, 234, 234);
+    width: 50px;
+    justify-content: center;
+    align-items: center;
+}
+
+.serviceCard.locked {
+    opacity: 0.5;
+    pointer-events: none;
+    background: #e5e7eb;
+}
+.messageSpan{
+    display: inline-block;
+    margin-top: 2rem;
+    color: red;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+
+/* ACTIVATE BUTTON */
+.activateServiceButton{
+    margin-top: 1rem;
+    color: white;
+    background-color: rgb(23, 17, 219);
+}

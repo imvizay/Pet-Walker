@@ -3,8 +3,7 @@ import TopHeader from '../../providerDashboard/TopHeader'
 import ProfileCard from '../ProfileCard'
 import ServiceList from '../ServiceList'
 import SubscriptionProviderCard from '../SubscriptionCard'
-import ActivityCard from '../ActivityCard'
-import ActivityFeed from '../ActivityFeed'
+
 
 import { useState,useEffect } from 'react'
 
@@ -30,7 +29,6 @@ function Home() {
 
           <div className="rightColumn">
             <SubscriptionProviderCard />
-            <ActivityFeed />
           </div>
 
         </div>

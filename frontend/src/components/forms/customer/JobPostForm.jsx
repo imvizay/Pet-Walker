@@ -273,31 +273,31 @@ function JobPostForm() {
 
         <div className="serviceGrid" onClick={handleServiceClick}>
           <button
-            data-service="walking"
-            className={`serviceBtn ${payload.service_type === "walking" ? "active" : ""}`}
+            data-service="walker"
+            className={`serviceBtn ${payload.service_type === "walker" ? "active" : ""}`}
           >
-            Walking
+            Walker
           </button>
 
           <button
-            data-service="sitting"
-            className={`serviceBtn ${payload.service_type === "sitting" ? "active" : ""}`}
+            data-service="sitter"
+            className={`serviceBtn ${payload.service_type === "sitter" ? "active" : ""}`}
           >
-            Sitting
+            Sitter
           </button>
 
           <button
-            data-service="grooming"
-            className={`serviceBtn ${payload.service_type === "grooming" ? "active" : ""}`}
+            data-service="groomer"
+            className={`serviceBtn ${payload.service_type === "groomer" ? "active" : ""}`}
           >
-            Grooming
+            Groomer
           </button>
 
           <button
             data-service="care"
             className={`serviceBtn ${payload.service_type === "care" ? "active" : ""}`}
           > 
-          Care 
+          Care/Training 
           </button>
         </div>
 

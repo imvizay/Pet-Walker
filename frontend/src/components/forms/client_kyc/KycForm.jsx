@@ -3,14 +3,14 @@ import axios from "axios";
 import "../../../assets/css/clientkyc.css";
 import api from "../../../api/axios";
 import { getCurrentUser,getCurrentKyc } from "../../../api/providerApi/getuser";
-import { submitKyc } from "../../../api/providerApi/manage_account";
+import { useNavigate } from "react-router-dom" 
+
 
 const IMAGE_PREFIX = "http://localhost:8000"
+
+
 const ClientProfileUpdate = () => {
-
-  
-
-
+  const navigate = useNavigate()
   const [form, setForm] = useState({
     username: "",
     state: "",
@@ -23,6 +23,13 @@ const ClientProfileUpdate = () => {
   const [profilePic, setProfilePic] = useState(null);
   const [preview, setPreview] = useState('/defaultuserimg.avif');
   const [loading, setLoading] = useState(false);
+
+  const imageSrc = !preview
+  ? "/defaultuserimg.avif"
+  : preview.startsWith("blob:") || preview.startsWith("http")
+  ? preview
+  : `${IMAGE_PREFIX}${preview}`;
+
 
 
   // ================ LOAD USER DETAILS ==================== 
@@ -116,21 +123,24 @@ const ClientProfileUpdate = () => {
 
   return (
     <div className="kyc-container">
+      
+      <button className="backBtn" onClick={()=>navigate(-1)}>Back</button>
 
-      <form onSubmit={handleSubmit}>
-
+      <form className="mainForm" onSubmit={handleSubmit}>
         {/* HEADER */}
         <div className="kyc-header">
-          <h2>Profile & Verification</h2>
+          <h2>Profile & Verification </h2> 
           <p>Keep your information accurate to receive bookings</p>
         </div>
+
+        
 
         {/* PROFILE CARD */}
         <div className="kyc-card profile-card">
 
           <div className="avatar-area">
             <img
-              src={`${IMAGE_PREFIX}${preview}` || '/defaultuserimg.avif'}
+              src={imageSrc}
               alt="avatar"
             />
             <input type="file" accept="image/*" onChange={handleFile}/>
@@ -210,12 +220,7 @@ const ClientProfileUpdate = () => {
           <button className="save-btn" disabled={loading}>
           {loading ? "Saving..." : "Save Profile"}
         </button>
-         <div className="extraActions">
-          <button className="discardBtn">Discard Changes</button>
-          <button className="cancelBtn">Cancel Kyc</button>
-         </div>
         </div>
-
       </form>
     </div>
   );

@@ -19,14 +19,17 @@ def user_signup(request):
 
 
 from rest_framework.permissions import IsAuthenticated
-
+import os
 # runs after google o auth login and sends response of the logged in user to frontend.
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def find_user(request):
+
     user = request.user
+
     return Response({
         "id": user.id,
+        "profile_pic": user.profile_pic.url if user.profile_pic else "",
         "email": user.email,
         "username": user.username,
         "role": getattr(user, "role", None)
