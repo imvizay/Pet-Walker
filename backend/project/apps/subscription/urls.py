@@ -7,4 +7,6 @@ urlpatterns = [
     path('service/activate/',views.activate_services,name='activate-services'),
     path('services/',views.activate_services,name='activate-services'),
 
+    path('publish/service/<int:pk>/',views.publish_service,name='publish-service')
+
 ]

@@ -54,3 +54,20 @@ export const getSubscribedPlan = async () => {
         }
     }
 }
+
+// PUBLISH SERVICES
+
+export const publishServiceCall = async (id) => {
+    try{
+        let res = await api.post(`publish/service/${id}/`)
+        return {
+            success:true,
+            message:res.data.msg
+        }
+    } catch(error){
+       return{
+        success:false,
+        error:error?.response?.data
+       }
+    }
+}

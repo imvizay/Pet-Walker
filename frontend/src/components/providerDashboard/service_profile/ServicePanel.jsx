@@ -1,8 +1,8 @@
 import { useState ,useEffect} from "react";
 import '../../../assets/css/service_provider/servicepanel.css'
 import { CheckIcon } from 'lucide-react'
-import { getSubscribedPlan } from "../../../api/providerApi/manageServices";
-import { activateService,getServices } from "../../../api/providerApi/manageServices";
+
+import { activateService } from "../../../api/providerApi/manageServices";
 
 import { useNavigate } from "react-router-dom"
 
@@ -12,54 +12,23 @@ const SERVICES = [
   { id: 3, name: "sitter"},
   { id: 4, name: "care"}
 ];
+import { useOutletContext } from "react-router-dom";
 
 export default function ServicesPanel() {
   const navigate = useNavigate()
 
-  const [hasSubscription,setSubscription] = useState({})
-  const [activeServices,setActiveService] = useState([])
-  const [alreadyActivated,setAlreadyActivated] = useState([])
- 
-
-  // GET SUBSCRIPTION DATA
-  useEffect(()=>{
-
-    const loadSubscription = async () => {
-        let res = await getSubscribedPlan()
-
-        if(!res.success){
-          return console.log(res.error)
-        }
-        setSubscription(res.data)
-        localStorage.setItem("subscription",JSON.stringify(res.data)) // subscription detail is set on localstorage
-
-    }
-
-    const loadActivatedServices = async () => {
-      let res = await getServices()
-      if(!res.success) return console.log(res?.data?.error)
-      
-      let activated = res.data.filter(s=> s.is_active).map(s=>s.service)
-      setAlreadyActivated(activated)   
-    }
-
-    loadSubscription()
-    loadActivatedServices()
+  const {hasSubscription,activeServices,alreadyActivated , setActiveService} = useOutletContext()
   
-  },[])
-
-  // console.log(hasSubscription)
-
 
   // HANDLE service selection
-  const serviceSelection = (id,service) => {
+  const serviceSelection = (service) => {
 
     if(alreadyActivated.includes(service)) return 
     
-    console.log("id",id,"service-name",service)
+    // console.log("id",id,"service-name",service)
 
     let allowed = hasSubscription?.max_service || 1 
-    console.log("allowed",allowed)
+    // console.log("allowed",allowed)
 
     setActiveService( prev => {
 
@@ -92,7 +61,7 @@ export default function ServicesPanel() {
 
       if(!res.success) return alert("failed activation api")
        
-      console.log(res.data)
+      // console.log(res.data)
       navigate('/service-provider')
       return 
     }
