@@ -51,6 +51,33 @@ def activate_services(request):
 
         return Response({"msg":"Request Recieved services will be activated shortly."})
 
+@api_view(["POST"])
+def publish_service(request,pk):
+    user = request.user
+
+    qs_obj = ProviderService.objects.filter(user=user,id=pk).first()
+
+    if not qs_obj:
+        raise ValidationError({"error":"no serive found with the given id in the database."})
+    
+    if qs_obj.is_published:
+
+        qs_obj.is_published = False
+        qs_obj.save()
+
+        return Response({"msg":"Service will be un-pulished shortly.Thank you."})
+
+    qs_obj.is_published=True
+    qs_obj.save()
+    return Response({"msg":"service will be published soon.Thank you"})
+
+    
+
+    
+
+    
+
+    
 
 
 

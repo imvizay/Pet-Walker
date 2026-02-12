@@ -1,24 +1,18 @@
 import { useEffect, useState } from "react";
 import ServiceItem from "./ServiceItem";
-
+import { useOutletContext } from "react-router-dom";
 function ServiceList(){
   
-  let [subscription,setSubscription] = useState()
+  const { hasSubscription,alreadyActivated } = useOutletContext()
 
-  // FETCH Details From Local State
-  useEffect(()=>{
 
-    const subs = localStorage.getItem("subscription")
-    if(!subs) return
-    setSubscription(subs)
-
-  },[])
 
   return (
     <div className="serviceCardContainer">
       <h3>Active Services</h3>
       <div className="serviceBox">
-        <ServiceItem  />
+        <ServiceItem alreadyActivated={alreadyActivated} />
+
       </div>
     
     </div>

@@ -23,7 +23,6 @@ class SubscriptionPlanUserSerializer(serializers.ModelSerializer):
 
 class ProviderServiceSerializer(serializers.ModelSerializer):
     
-
     class Meta:
         model = ProviderService
         fields = "__all__"

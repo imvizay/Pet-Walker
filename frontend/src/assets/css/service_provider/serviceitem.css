@@ -1,0 +1,115 @@
+/* container */
+.serviceList{
+  display:flex;
+  flex-direction:column;
+  margin: 1rem 0;
+  gap:14px;
+}
+
+/* card */
+.serviceRowCard{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#fff;
+  padding:10px;
+  border-radius:12px;
+  box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+/* icon circle */
+.serviceIcon{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:#4f46e5;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  font-size:18px;
+}
+
+/* center content */
+.serviceContent{
+  flex:1;
+  margin-left:16px;
+}
+
+.serviceTop{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap: 100px;
+  margin-right: 20px;
+}
+
+.serviceTop h2{
+  text-transform:capitalize;
+  font-size:18px;
+  font-weight:600;
+}
+
+/* chips */
+.statusGroup{
+  display:flex;
+  gap:50px;
+
+}
+
+.chip{
+  padding:5px 12px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:600;
+}
+
+.on{ background:#dcfce7; color:#15803d;}
+.off{ background:#fee2e2; color:#b91c1c;}
+.pub{ background:#e0f2fe; color:#0369a1;}
+.draft{ background:#fef3c7; color:#92400e;}
+
+/* actions */
+.serviceActions{
+  display:flex;
+  gap:10px;
+}
+
+.actionMain{
+  background:#4f46e5;
+  color:#fff;
+  border:none;
+  padding:7px 14px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.actionAlt{
+  background:transparent;
+  border:1px solid #ccc;
+  padding:7px 14px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+/* empty state */
+.emptyState{
+  padding:30px;
+  text-align:center;
+  background:#fafafa;
+  border-radius:12px;
+  color:#777;
+}
+
+/* publish & unpublish servcie*/
+
+.success{
+  border-color:#16a34a;
+  color:#16a34a;
+}
+
+.danger{
+  border-color:#dc2626;
+  color:#dc2626;
+}

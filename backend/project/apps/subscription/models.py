@@ -70,7 +70,12 @@ class ProviderService(models.Model):
     service = models.CharField(max_length=20,choices=SERVICES_CHOICE,unique=True)
 
     is_active = models.BooleanField(default=False)
+
+    is_published = models.BooleanField(default=False)
+
     created_at = models.DateTimeField(auto_now_add=True)
+
+    
 
     class Meta:
         unique_together = ['service','user']

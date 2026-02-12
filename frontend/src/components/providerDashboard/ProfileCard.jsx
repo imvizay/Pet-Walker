@@ -1,5 +1,7 @@
 import StatCard from "./StatCard";
 import { useNavigate } from "react-router-dom";
+import { capitalizeEachWord } from "../../utilis/capitalize";
+
 
 const PROFILE_URL = "http://localhost:8000"
 
@@ -15,8 +17,8 @@ function ProfileCard({user}){
       <div className="profileHeader">
         <img className="profileAvatar" src={`${PROFILE_URL}${user?.profile_pic}` || "no-profile"}/>
         <div className="profileMeta">
-          <h2>{user?.username || ""}</h2>
-          <p>{ user?.role?.join(" • ") || "Service Provider"}</p>
+          <h2 style={userNameStyle}>{user?.username?.toUpperCase() || ""}</h2>
+          <p style={userRoleBox} >{capitalizeEachWord(user?.role)}</p>
         </div>
         <div>
             <button 
@@ -29,3 +31,19 @@ function ProfileCard({user}){
   )
 }
 export default ProfileCard;
+
+
+const userNameStyle = {
+  color:"blue",
+  fontSize:"14px",
+  fontWeight:600,
+  letterSpacing:"1.5px"
+
+}
+
+const userRoleBox = {
+  color:"gray",
+  fontSize:'12px',
+  fontWeight:600,
+  letterSpacing:'1.2px'
+}
