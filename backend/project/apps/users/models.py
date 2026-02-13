@@ -45,7 +45,7 @@ class Client(AbstractBaseUser, PermissionsMixin):
 
     is_staff = models.BooleanField(default=False)
 
-    has_susbscription = models.BooleanField(default=False)
+    has_subscription = models.BooleanField(default=False)
     
     created_at = models.DateTimeField(auto_now_add=True)
     objects = UserManager()
@@ -61,7 +61,7 @@ class Client(AbstractBaseUser, PermissionsMixin):
 # Later Profile Info for full kyc
 class ClientKyc(models.Model):
 
-    client = models.OneToOneField(Client,on_delete=models.CASCADE,null=False,blank=False)
+    client = models.OneToOneField(Client,on_delete=models.CASCADE,null=False,blank=False,related_name='userkyc')
     state = models.CharField(max_length=50,null=False,blank=False)
     city = models.CharField(max_length=50,null=False,blank=False)
     street = models.CharField(max_length=100,null=False,blank=False)

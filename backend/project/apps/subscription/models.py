@@ -27,8 +27,8 @@ class SubscriptionPlan(models.Model):
 # SUBSCRIBED PLAN
 class SubscribedUserPlan(models.Model):
 
-    user = models.ForeignKey(Client,on_delete=models.PROTECT)
-    subscription_plan = models.ForeignKey(SubscriptionPlan,on_delete=models.PROTECT)
+    user = models.ForeignKey(Client,on_delete=models.PROTECT,related_name="subs_user_plan")
+    subscription_plan = models.ForeignKey(SubscriptionPlan,on_delete=models.PROTECT,related_name="subs_plan")
     start_date = models.DateTimeField(null=False,blank=True)
     end_date = models.DateTimeField(null=False,blank=True)
     is_active = models.BooleanField(default=True)
@@ -66,7 +66,7 @@ class SubscribedUserPlan(models.Model):
 class ProviderService(models.Model):
     SERVICES_CHOICE = [('walker','walker'),('sitter','sitter'),('groomer','groomer'),('care','care/trainer')]
     
-    user = models.ForeignKey(Client,on_delete=models.CASCADE)
+    user = models.ForeignKey(Client,on_delete=models.CASCADE,related_name="services")
     service = models.CharField(max_length=20,choices=SERVICES_CHOICE,unique=True)
 
     is_active = models.BooleanField(default=False)

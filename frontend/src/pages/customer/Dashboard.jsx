@@ -1,19 +1,25 @@
 import { useState ,useEffect} from 'react'
+import { useOutletContext } from 'react-router-dom'
 import '../../assets/css/customer_dashboard/customer_dash.css'
-import { ArrowBigDown, FilterIcon, FilterX, Heart, IdCard, ListFilterIcon, Plus, Search } from 'lucide-react'
-import DashCards from '../../components/cards/customer_dash/dashCards'
-import JobPostCard from '../../components/cards/customer_dash/MyJobPost'
+import { ListFilterIcon, Plus, Search } from 'lucide-react'
+
+
+import JobListedCard from '../../components/cards/customer_dash/JobListedCard'
 
 import { getJobs } from '../../api/customerApi/jobApi'
-import { capitalizeFirstChar } from '../../utilis/capitalize'
+
+
+import { Link } from 'react-router-dom'
 
 function CustomerDashboard() {
 
+  let   {sq,setSq,handleSq } = useOutletContext()
   const [user,setUser] = useState({})
-
-  
   const [jobs,setJobs] = useState([])
   const [errors,setErrors] = useState(null)
+
+  
+
 
   // GET JOBS FROM BACKEND
   useEffect(()=>{
@@ -38,34 +44,28 @@ function CustomerDashboard() {
     fetchJobs()
   },[])
 
-  console.log(jobs)
-
-
+  
+  
   return (
     <>
     
     <div className='customerIndexPageContainer'>
 
       <div className='customerIndexHead'>
-        <h1>WELCOME BACK ,<span className='userSpan' style={{color:"green"}}>{capitalizeFirstChar(user.username)}</span></h1>
+        <h1>WELCOME BACK - <span className='userSpan'>{user?.username?.toUpperCase()}</span></h1>
 
         <div className='searchBox'>
           <span className='searchIcon'><Search/></span>
-          <input className='searchInput' type="search" placeholder='Find petwalker , sitter , grommer near your neighbourhood ...'  />
-          <span className='searchBtn'> <ListFilterIcon/> FIND CARE</span>
+          <input className='searchInput' onChange={(e)=>setSq(e.target.value)} value={sq} type="search" placeholder='Find petwalker , sitter , grommer near your neighbourhood ...'  />
+          <span className='searchBtn' onClick={handleSq}> <ListFilterIcon/> <Link to={`search/${user.id}/${sq}/`}>  FIND CARE </Link> </span>
         </div>
       </div>
 
-      <div className='threeBoxes'>
-      
-          <DashCards />
-      
-      </div>
 
       <div className='customerIndexLeg'>
 
         <div className='myJobPost'>
-          <JobPostCard jobs={jobs}/>
+          <JobListedCard jobs={jobs}/>
         </div>
 
         <div className='platformServices'>
@@ -74,23 +74,11 @@ function CustomerDashboard() {
             <h2>Create Job Post</h2>
             <p>post a new job and find a perfect care provider in minutes.</p>
             <div>
-             <span><Plus/></span><span> Post a new job</span>
+             <span><Plus/></span><Link to="jobpost"> Post a new job</Link>
             </div>
           </div>
 
-          <div className='quickLinks'>
-            <div className='links'>
-              <span><IdCard/></span>
-              <span>Subscription Plan</span>
-              <span><ArrowBigDown/></span>
-            </div>
-
-             <div className='links'>
-              <span><Heart/></span>
-              <span>Favourite Walker</span>
-              <span><ArrowBigDown/></span>
-            </div>
-          </div>
+        
 
         </div>
 

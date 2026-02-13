@@ -1,5 +1,6 @@
 from django.shortcuts import render
 
+from rest_framework.generics import ListAPIView
 from rest_framework.viewsets import ModelViewSet
 
 # Create your views here.
@@ -43,6 +44,39 @@ class MyJobPostView(ModelViewSet):
         serializer.save(owner=self.request.user)
 
         
+# Filter endpoint view
 
-    
-    
+from django.db.models import Case, When, Value, IntegerField
+from rest_framework.generics import ListAPIView
+
+class DiscoverProviders(ListAPIView):
+
+    serializer_class = DiscoverProviderSerializer
+
+    def get_queryset(self):
+
+        squery = self.request.GET.get("query")
+
+        # Base queryset
+        qs = Client.objects.filter(
+            role__icontains='provider',
+            is_active=True,
+            services__is_active=True
+        )
+
+        # Apply search ONLY if user typed something
+        if squery:
+            qs = qs.filter(
+                services__service__icontains=squery
+            )
+
+        # Sort subscribed users first
+        qs = qs.annotate(
+            subscription_priority=Case(
+                When(has_subscription=True, then=Value(0)),
+                default=Value(1),
+                output_field=IntegerField()
+            )
+        ).order_by('subscription_priority')
+
+        return qs.distinct()

@@ -67,9 +67,9 @@ function ServiceItem({ alreadyActivated = [] }) {
 
           {/* Right Actions */}
           <div className="serviceActions">
-             <button onClick={()=>publishService(s.id,s.is_active)} className={`actionAlt ${s.is_published ? "danger" : "success"}`} >{s.is_published ? "Unpublish" :"Publish now"}</button>
+             <button onClick={()=>publishService(s.id, s.is_published)} className={`actionAlt ${s.is_published ? "danger" : "success"}`} >{s.is_published ? "Unpublish" :"Publish now"}</button>
 
-            <button className="actionMain">Manage</button>
+            {/* <button className="actionMain">Manage</button> */}
           </div>
 
         </div>

@@ -3,8 +3,7 @@ import ServiceItem from "./ServiceItem";
 import { useOutletContext } from "react-router-dom";
 function ServiceList(){
   
-  const { hasSubscription,alreadyActivated } = useOutletContext()
-
+  const { alreadyActivated } = useOutletContext()
 
 
   return (

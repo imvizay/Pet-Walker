@@ -19,6 +19,7 @@ import ProviderDashboard from './layout/dashboard/ServiceProvider'
 import ClientProfileUpdate from './components/forms/client_kyc/KycForm'
 import Home from './components/providerDashboard/indexcomponent/Home'
 import ServicesPanel from './components/providerDashboard/service_profile/ServicePanel'
+import ProviderListing from './pages/customer/ProviderListing'
 
 function App() {
   return (
@@ -37,6 +38,10 @@ function App() {
         <Route path='searchProvider' element={<FindProviders/>}/>
         <Route path='manage/:id' element={<ManagePost/>}/>
         <Route path='editpost/:id' element={<JobPostForm/>}/>
+
+        {/* search provider */}
+        <Route path='search/:id/:sq' element={<ProviderListing/>}/>
+
 
       </Route>
 

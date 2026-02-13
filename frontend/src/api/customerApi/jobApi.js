@@ -94,3 +94,23 @@ export const updateJob = async (id,formData) => {
   }
 
 }
+
+
+
+// FILTER JOB By ID 
+export const searchQueryJob = async (query) => {
+
+  try{
+    let res = await api.get(`discover/providers/?query=${query}`)
+    return {
+      success:true,
+      data:res.data
+    }
+  } catch(error){
+    return {
+      success:false,
+      error:error?.response?.data
+    }
+  }
+
+}

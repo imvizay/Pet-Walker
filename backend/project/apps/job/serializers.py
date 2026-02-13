@@ -17,9 +17,7 @@ class PetBreedSerializer(serializers.ModelSerializer):
 
 
 class MyJobPostSerializer(serializers.ModelSerializer):
-
     pet_profile =serializers.ImageField(required=False,allow_null=True)
-
     class Meta:
         model = MyJobPost
         fields = "__all__"
@@ -86,3 +84,25 @@ class MyJobPostSerializer(serializers.ModelSerializer):
             validated_data["pet_profile"] = instance.pet_profile
 
         return super().update(instance, validated_data)
+
+
+from apps.subscription.models import ProviderService
+from apps.subscription.models import ProviderService
+# Discover jobs serializer
+
+class DiscoverProviderSerializer(serializers.ModelSerializer):
+
+    services = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Client
+        fields = [
+            "id",
+            "username",
+            "profile_pic",
+            "has_subscription",
+            "services"
+        ]
+    def get_services(self, client):
+     return client.services.filter(is_active=True).values_list("service", flat=True)
+
