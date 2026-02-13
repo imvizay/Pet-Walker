@@ -12,7 +12,7 @@ export const capitalizeEachWord = (str) => {
         word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
     ))
 
-    return capitalize.join(" - ")
+    return capitalize.join(" ")
 
 }
 

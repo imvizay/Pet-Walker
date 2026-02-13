@@ -1,0 +1,97 @@
+.jobPostTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.jobPostTitle p {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.jobPostTitle span {
+  color: #1ea54c;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* ===== CARD ===== */
+
+.jobCard {
+  background: white;
+  display: flex;
+  gap: 18px;
+  padding: 18px;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+  transition: transform 0.15s ease;
+}
+
+.jobCard:hover {
+  transform: translateY(-3px);
+}
+
+/* IMAGE */
+
+.jobImage img {
+  width: 90px;
+  height: 90px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+/* CONTENT */
+
+.jobContent {
+  flex: 1;
+}
+
+.jobHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.jobHeader h3 {
+  font-size: 18px;
+}
+
+.status.active {
+  background: #dff4e7;
+  color: #1ea54c;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+/* META */
+
+.jobMeta {
+  display: flex;
+  gap: 8px;
+  color: #777;
+  font-size: 14px;
+  margin: 6px 0;
+}
+
+/* DESC */
+
+.jobDesc {
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 12px;
+}
+
+/* BUTTON */
+
+.manageBtn {
+  background: #1ea54c;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}

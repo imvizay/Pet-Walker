@@ -24,6 +24,7 @@ from apps.users.views import user_signup,find_user
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('apps.job.routers')),
+    path('api/', include('apps.job.urls')), # filter jobs
     path("api/myauth/",include("apps.myauth.urls")),
     path('api/user/',include("apps.users.urls")),
     path('api/',include("apps.subscription.urls")),

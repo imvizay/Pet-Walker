@@ -1,11 +1,10 @@
-
+import '../../../assets/css/customer_dashboard/jobcard/joblistcard.css'
 import { ArrowRight } from "lucide-react"
 
 import { capitalizeEachWord,capitalizeFirstChar } from "../../../utilis/capitalize"
-import { Link } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 
-export default function JobPostCard({ jobs }) {
+export default function JobListedCard({ jobs }) {
 
   const navigate = useNavigate()
 

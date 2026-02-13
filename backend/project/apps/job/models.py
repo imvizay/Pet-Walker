@@ -12,10 +12,10 @@ JOB_STATUS = [
 ]
 
 SERVICE_TYPE=[
-    ('walking',"walking"),
-    ("grooming",'grooming'),
-    ('sitting','sitting'),
-    ('training','training')
+    ('walker',"walker"),
+    ("groomer",'groomer'),
+    ('sitter','sitter'),
+    ('care','care')
 ]
 
 

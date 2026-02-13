@@ -47,38 +47,27 @@ function ProviderDashboard() {
 
 
   // TOGGLE SERVICE - PUBLISHED / UNPUBLISHED
-  const publishService = async (id,status=false) => {
-    // STATUS = false , make publish 
-    if(!status){
-  
-        let res = await publishServiceCall(id)
-        if(!res.success){
-          console.log(res.error)
-          return
-        }
-         setAlreadyActivated(prev =>
-          prev.map(s =>
-            s.id === id
-              ? { ...s, is_published: !s.is_published }
-              : s
-          )
-        )
-        return alert(res.message)
-    }
-    // STATUS = true , make unpublish
+ const publishService = async (id, currentStatus) => {
+
     let res = await publishServiceCall(id)
-    if(!res.success){
+
+    if (!res.success) {
       console.log(res.error)
       return
     }
-    return alert(res.message)
-    
+
+    // Update UI state
+    setAlreadyActivated(prev =>
+      prev.map(s =>
+        s.id === id
+          ? { ...s, is_published: !currentStatus }
+          : s
+      )
+    )
+
+    alert(res.message)
   }
 
-  
-   
-
-  
 
   return (
     <div className="dashboardLayout">
