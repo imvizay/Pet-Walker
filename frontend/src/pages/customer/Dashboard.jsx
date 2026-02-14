@@ -1,26 +1,21 @@
-import { useState ,useEffect} from 'react'
-import { useOutletContext } from 'react-router-dom'
+
 import '../../assets/css/customer_dashboard/customer_dash.css'
+import { useState ,useEffect} from 'react'
+
+import { useOutletContext , Link} from 'react-router-dom'
+
 import { ListFilterIcon, Plus, Search } from 'lucide-react'
-
-
 import JobListedCard from '../../components/cards/customer_dash/JobListedCard'
-
 import { getJobs } from '../../api/customerApi/jobApi'
-
-
-import { Link } from 'react-router-dom'
 
 function CustomerDashboard() {
 
-  let   {sq,setSq,handleSq } = useOutletContext()
+  let   {sq,setSq,handleSq } = useOutletContext() // query state , query setter , search query fn
   const [user,setUser] = useState({})
   const [jobs,setJobs] = useState([])
   const [errors,setErrors] = useState(null)
 
   
-
-
   // GET JOBS FROM BACKEND
   useEffect(()=>{
 
@@ -57,7 +52,7 @@ function CustomerDashboard() {
         <div className='searchBox'>
           <span className='searchIcon'><Search/></span>
           <input className='searchInput' onChange={(e)=>setSq(e.target.value)} value={sq} type="search" placeholder='Find petwalker , sitter , grommer near your neighbourhood ...'  />
-          <span className='searchBtn' onClick={handleSq}> <ListFilterIcon/> <Link to={`search/${user.id}/${sq}/`}>  FIND CARE </Link> </span>
+          <span className='searchBtn' onClick={handleSq} > <ListFilterIcon/> FIND CARE </span>
         </div>
       </div>
 
@@ -78,18 +73,9 @@ function CustomerDashboard() {
             </div>
           </div>
 
-        
-
         </div>
-
       </div>
-
     </div>
-
-    
-
-   
-
     </>
   )
 }

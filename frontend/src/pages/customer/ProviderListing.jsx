@@ -1,24 +1,41 @@
 import React, { useState, useEffect } from "react";
 import '../../assets/css/customer_dashboard/providerlisting.css'
-import { useParams } from "react-router-dom";
+import { useParams , useNavigate } from "react-router-dom";
 import { useOutletContext } from "react-router-dom";
+
+import { searchQueryJob } from "../../api/customerApi/jobApi";
+
 const BASE = "http://localhost:8000";
 function ProviderListing() {
 
-  let {sq} = useParams() 
+  let { sq } = useParams() 
+  const navigate = useNavigate()
 
   const [loading, setLoading] = useState(true);
   const [providers, setProviders] = useState([]);
-  let { queryResults,debounceQuery,handleSq } = useOutletContext()
+  let { queryResults,handleSq,setQueryResults } = useOutletContext()
 
   // Fake loading simulation
-  useEffect(() => {
-    if(!sq) return 
+  useEffect( () => {
 
-    handleSq(sq)
-    
-    
-  }, []);
+     if(!sq.trim()) return 
+
+     setLoading(true)
+
+     const fetchProvider = async () => {
+         let result = await searchQueryJob(sq)
+         if(!result.success){
+           return navigate("/")
+         } 
+
+         setQueryResults(result.data || [])  
+         setLoading(false) 
+     }
+
+     fetchProvider()
+
+  }, [sq] )
+
 
   useEffect(()=>{
     console.log("find care:",queryResults)

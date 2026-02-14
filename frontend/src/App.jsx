@@ -40,7 +40,7 @@ function App() {
         <Route path='editpost/:id' element={<JobPostForm/>}/>
 
         {/* search provider */}
-        <Route path='search/:id/:sq' element={<ProviderListing/>}/>
+        <Route path='search/:sq' element={<ProviderListing/>}/>
 
 
       </Route>

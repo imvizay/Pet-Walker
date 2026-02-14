@@ -1,37 +1,20 @@
 import { useState,useEffect } from 'react'
 import CustomerDashboardNavbar from '../../components/commmon/CustomerNavbar'
 import { Outlet } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { searchQueryJob } from '../../api/customerApi/jobApi'
-import { useDebounce } from '../../utilis/customer_search/useDebounce'
+
 
 function CustomerDashboardLayout() {
-
+  const navigate = useNavigate()
   const [searchQuery,setSearchQuery] = useState("")
   const [queryResults,setQueryResults] = useState([])
-  const debounceQuery = useDebounce(searchQuery,2000)
 
-
-  useEffect( () => {
-
-    if(!debounceQuery.trim()) return
-   
-
-  },[debounceQuery])
-  // Handle Search Query
- 
+  
   const handleSearchQuery = async () => {
-
-    console.log("dbQuery",debounceQuery)
-
-
-    let result = await searchQueryJob(debounceQuery)
-    if(!result.success){
-      return alert("invalid search")
-    } 
-    console.log(result.data)
-    setQueryResults(result.data || [])  
-    return 
+    if(!searchQuery.trim()) return;
+    navigate(`search/${searchQuery}`)
   }
 
 
@@ -46,7 +29,6 @@ function CustomerDashboardLayout() {
         sq:searchQuery,
         setSq:setSearchQuery,
         handleSq:handleSearchQuery,
-        debounceQuery:debounceQuery,
         
         // find care page data 
         queryResults:queryResults,
@@ -56,7 +38,7 @@ function CustomerDashboardLayout() {
    </main>
 
    <footer>
-    
+    {/* empty for now */}
    </footer>
 
    </>
