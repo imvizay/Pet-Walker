@@ -169,6 +169,19 @@
     background:#178a3f;
 }
 
+.commercialButtons{
+    display: flex;
+    gap: 10px;
+}
+.commercialButtons .contactButtonDiv .locked{
+    color: rgb(51, 50, 50);
+    background: rgb(237, 237, 237);
+    pointer-events: none;
+    display: flex;
+    opacity: 0.4;
+    gap: 5px;
+}
+
 /* PAGINATION */
 .paginationControls{
     grid-column:1 / -1;

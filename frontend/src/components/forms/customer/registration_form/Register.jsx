@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, Navigate } from "react-router-dom";
+import { useParams, Navigate, useNavigate } from "react-router-dom";
 import '../../../../assets/css/auth/register.css'
 
 import { PawPrint, Briefcase, Share2 } from "lucide-react";
@@ -14,6 +14,7 @@ const AUTH_CONFIG = {
   login: {
     title: "Welcome Back",
     subtitle: "Login to manage your pet care services.",
+    role:["customer","provider"],
     fields: ["email", "password"],
     buttonText: "Login",
     showSocial: true
@@ -31,8 +32,9 @@ const AUTH_CONFIG = {
 
 function AuthForm() {
 
-  const { type } = useParams();
-  const config = AUTH_CONFIG[type];
+  const navigate = useNavigate()
+  const { type } = useParams()
+  const config = AUTH_CONFIG[type]
 
   const emptyLogin = { email:"", password:"" }
   const emptyRegister = { username:"", email:"", password:"" }
@@ -77,8 +79,8 @@ function AuthForm() {
       localStorage.setItem("refresh",result.data.refresh)
 
       await fetchCurrentUser()
-      alert("Logged in successfully")
-      return
+      navigate(`/`)
+      return alert("Logged In.")
     }
 
     // REGISTER
@@ -140,8 +142,9 @@ function AuthForm() {
           </div>
         )}
 
+    
         <div className="authFields">
-
+         
           {config.fields.map(field=>{
 
             if(field==="name")

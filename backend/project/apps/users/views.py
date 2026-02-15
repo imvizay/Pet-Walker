@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from apps.users.models import Client as User , ClientKyc
 from rest_framework.decorators import api_view,permission_classes
 from apps.users.serializers import UserSerializer,ClientKycSerializer
+from apps.subscription.models import SubscribedUserPlan
 
 from rest_framework.views import APIView
 
@@ -27,11 +28,13 @@ def find_user(request):
 
     user = request.user
 
+
     return Response({
         "id": user.id,
         "profile_pic": user.profile_pic.url if user.profile_pic else "",
         "email": user.email,
         "username": user.username,
+        "has_subscription":user.has_subscription,
         "role": getattr(user, "role", None)
     })
 

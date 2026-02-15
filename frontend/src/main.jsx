@@ -6,11 +6,19 @@ import App from './App.jsx'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 // router
 import  { BrowserRouter } from 'react-router-dom'
+// context
+import { UserContextProvider } from './contexts/UserContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <GoogleOAuthProvider clientId="896067105432-mmaaq34vcggd59dfm6tbrvf37n2uv2f2.apps.googleusercontent.com">
+
   <BrowserRouter>
-    <App />
+
+   <UserContextProvider>
+     <App />
+   </UserContextProvider>
+   
   </BrowserRouter>
+  
   </GoogleOAuthProvider>,
 )

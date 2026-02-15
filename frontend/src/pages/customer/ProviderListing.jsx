@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import '../../assets/css/customer_dashboard/providerlisting.css'
 import { useParams , useNavigate } from "react-router-dom";
 import { useOutletContext } from "react-router-dom";
-
+import { useUserContext } from "../../contexts/UserContext";
 import { searchQueryJob } from "../../api/customerApi/jobApi";
 
-const BASE = "http://localhost:8000";
+import { LockIcon } from 'lucide-react'
+
+
 function ProviderListing() {
 
   let { sq } = useParams() 
@@ -13,7 +15,9 @@ function ProviderListing() {
 
   const [loading, setLoading] = useState(true);
   const [providers, setProviders] = useState([]);
+
   let { queryResults,handleSq,setQueryResults } = useOutletContext()
+  let { user } = useUserContext()
 
   // Fake loading simulation
   useEffect( () => {
@@ -36,6 +40,23 @@ function ProviderListing() {
 
   }, [sq] )
 
+  
+  // FILTER RESULTS
+
+  const filterResults = async (e) => {
+    const el = e.target.closest("span")
+    const type = el.dataset.type
+    
+    if(!type) return 
+
+    // fn  
+    let res = await searchQueryJob(type)
+    if(!res.success) return alert("query failed")
+
+    setQueryResults(res.data)
+      
+  }
+
 
   useEffect(()=>{
     console.log("find care:",queryResults)
@@ -53,9 +74,9 @@ function ProviderListing() {
           <div className="serviceSect">
             <label className="filterLabel">Service</label>
 
-            <div className="serviceList">
+            <div onClick={(e) => filterResults(e) } className="serviceList">
               {["Walker","Groomer","Sitter","Care"].map(s => (
-                <span key={s} className="servicePill">
+                <span data-type={s} key={s} className="servicePill">
                   {s}
                 </span>
               ))}
@@ -93,7 +114,7 @@ function ProviderListing() {
                 <div className="avatar"><img  src={`${p.profile_pic}`} alt="" /></div>
 
                 <h4>{p.username}</h4>
-                <p className="city">{p.city || "bhopal"}</p>
+                <p className="city">{p.city || "Bhopal"}</p>
 
                 <div className="serviceTags">
                   {p.services.map((s,i)=>
@@ -101,9 +122,17 @@ function ProviderListing() {
                   )}
                 </div>
 
-                <button className="viewBtn">
-                  Hire
-                </button>
+               <div className="commercialButtons">
+                <button className="viewBtn"> Hire </button>
+                <div className="contactButtonDiv"> 
+
+                  <button className={user.has_subscription = false ? "" : "locked"}>
+                  {user.has_subscription ? <LockIcon size={12}/>: ""} Contact 
+                  </button>
+
+                </div>
+               </div>
+                 
               </div>
           ))
         }

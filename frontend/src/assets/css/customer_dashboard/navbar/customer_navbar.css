@@ -70,3 +70,12 @@
   height: 36px;
   object-fit: cover;
 }
+.logoutBtn button{
+  background-color: none;
+  transition: .2s ease;
+}
+.logoutBtn button:hover{
+  background-color: #1ea54c;
+  color: white;
+
+}
