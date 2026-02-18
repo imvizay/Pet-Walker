@@ -18,7 +18,6 @@ export const UserContextProvider = ({children}) => {
         let u = JSON.parse(localStorage.getItem("user"))
         if(!u) return null
         setUser(u)
-        navigate('/')
     }
 
     const logoutUser = () => {

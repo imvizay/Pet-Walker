@@ -1,0 +1,116 @@
+.applicationsPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 80vh;
+  padding: 20px;
+  width: 30%;
+  margin: 0 auto;
+  overflow-y: scroll;
+  background-color: rgba(198, 198, 198, 0.203);
+}
+/* scrollbar */
+/* Chrome, Edge, Safari */
+.applicationsPanel::-webkit-scrollbar {
+  width: 8px;
+}
+
+.applicationsPanel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.applicationsPanel::-webkit-scrollbar-thumb {
+  background: rgba(120, 120, 160, 0.35);
+  border-radius: 20px;
+  transition: background 0.2s;
+}
+
+.applicationsPanel::-webkit-scrollbar-thumb:hover {
+  background: rgba(79, 70, 229, 0.6);
+}
+
+
+.applicationCard {
+  background: white;
+  border-radius: 14px;
+  border: 1px solid #eee;
+  padding: 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+  transition: 0.25s;
+}
+
+.applicationCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 26px rgba(0,0,0,0.08);
+}
+
+.applicationTop {
+  display: flex;
+  gap: 14px;
+}
+.applicationPetImage {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+.applicationInfo {
+  flex: 1;
+}
+
+.applicationTitle {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.applicationMeta {
+  margin: 4px 0;
+  font-size: 13px;
+  color: #555;
+}
+
+.applicationTime {
+  font-size: 12px;
+  color: #777;
+}
+.applicationActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.acceptBtn {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background: #16a34a;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.acceptBtn:hover {
+  background: #15803d;
+}
+
+.rejectBtn {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background: #ef4444;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.rejectBtn:hover {
+  background: #dc2626;
+}
+.emptyNotification {
+  padding: 30px;
+  text-align: center;
+  color: #777;
+}

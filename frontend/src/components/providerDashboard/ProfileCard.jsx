@@ -8,14 +8,14 @@ const PROFILE_URL = "http://localhost:8000"
 function ProfileCard({user}){
 
   let navigate = useNavigate()
- 
+  
  
 
   return (
     <div className="profileCard">
 
       <div className="profileHeader">
-        <img className="profileAvatar" src={`${PROFILE_URL}${user?.profile_pic}` || "no-profile"}/>
+        <img className="profileAvatar" src={`${PROFILE_URL}${user?.profile_pic}` || "./defaultuserimg.avif"}/>
         <div className="profileMeta">
           <h2 style={userNameStyle}>{user?.username?.toUpperCase() || ""}</h2>
           <p style={userRoleBox} >{capitalizeEachWord(user?.role)}</p>

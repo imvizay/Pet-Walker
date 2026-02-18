@@ -49,8 +49,10 @@ class MyJobPostView(ModelViewSet):
 from django.db.models import Case, When, Value, IntegerField
 from rest_framework.generics import ListAPIView
 
-class DiscoverProviders(ListAPIView):
+from apps.job.pagination import pagination
 
+class DiscoverProviders(ListAPIView):
+    pagination_class = pagination.ProviderPagination
     serializer_class = DiscoverProviderSerializer
 
     def get_queryset(self):
@@ -80,3 +82,18 @@ class DiscoverProviders(ListAPIView):
         ).order_by('subscription_priority')
 
         return qs.distinct()
+
+
+from apps.job.serializers import DiscoverJobsSerializer
+class DiscoverJobs(ListAPIView):
+    serializer_class = DiscoverJobsSerializer
+
+    def get_queryset(self):
+        qs = MyJobPost.objects.filter(is_active=True).select_related("owner","pet_type","pet_breed")
+        service = self.request.query_params.get("service")
+
+        if service:
+            qs = qs.filter(service_type = service)
+            return qs
+
+        return qs.order_by('-job_date')

@@ -24,10 +24,10 @@ function CustomerDashboardNavbar() {
       <div className="cust_navLinks">
         <NavLink to="" >Home</NavLink>
 
-        <NavLink to="job-feeds">Job Feeds</NavLink>
-        <NavLink to={`job-application/${user?.id}`}>Applications</NavLink>
+        {/* <NavLink to="job-feeds">Job Feeds</NavLink> */}
+        <NavLink to={`application/${user?.id}`}>Applications</NavLink>
 
-        <NavLink to="job-history">My History</NavLink>
+        {/* <NavLink to="job-history">My History</NavLink> */}
 
       </div>
 

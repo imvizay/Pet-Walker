@@ -96,21 +96,23 @@ export const updateJob = async (id,formData) => {
 }
 
 
+export const searchQueryJob = async (query, page = 1) => {
+  try {
+    const res = await api.get(`/discover/providers/`, {
+      params: { query, page }
+    });
 
-// FILTER JOB By ID 
-export const searchQueryJob = async (query) => {
+    console.log(res.data)
 
-  try{
-    let res = await api.get(`discover/providers/?query=${query}`)
     return {
-      success:true,
-      data:res.data
-    }
-  } catch(error){
-    return {
-      success:false,
-      error:error?.response?.data
-    }
+      success: true,
+      data: res.data.results,
+      count: res.data.count,
+      next: res.data.next,
+      prev: res.data.previous
+    };
+
+  } catch (err) {
+    return { success: false, error: err };
   }
-
-}
+};

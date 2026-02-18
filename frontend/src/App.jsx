@@ -20,6 +20,8 @@ import ClientProfileUpdate from './components/forms/client_kyc/KycForm'
 import Home from './components/providerDashboard/indexcomponent/Home'
 import ServicesPanel from './components/providerDashboard/service_profile/ServicePanel'
 import ProviderListing from './pages/customer/ProviderListing'
+import JobsList from './pages/serviceprovider/ListedJobs'
+import ApplicationsNotificationPanel from './pages/customer/Applications'
 
 function App() {
   return (
@@ -42,15 +44,19 @@ function App() {
         {/* search provider */}
         <Route path='search/:sq' element={<ProviderListing/>}/>
 
+        <Route path='application/:id' element={<ApplicationsNotificationPanel/>}/>
+
 
       </Route>
 
       {/* SERVICE PROVIDER */}
 
-      <Route path='service-provider' element={<ProviderDashboard/>}>
+      <Route path='provider-dashboard' element={<ProviderDashboard/>}>
         <Route index element={<Home/>}/>
         <Route path='client-kyc/:id' element={<ClientProfileUpdate/>}/>
         <Route path='service-panel/:id' element = {<ServicesPanel/>}/>
+
+        <Route path='listed-jobs' element={<JobsList/>}/>
 
       </Route>
 

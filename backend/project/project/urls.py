@@ -28,6 +28,9 @@ urlpatterns = [
     path("api/myauth/",include("apps.myauth.urls")),
     path('api/user/',include("apps.users.urls")),
     path('api/',include("apps.subscription.urls")),
+
+    path('api/application/',include('apps.genericapp.urls')),
+
     path('api/register/',user_signup),
     path("api/auth/me/",find_user)
 

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'apps.myauth',
     'apps.job',
     'apps.users',
+    'apps.genericapp',
     'apps.subscription',
     "django_cleanup",
     'corsheaders'

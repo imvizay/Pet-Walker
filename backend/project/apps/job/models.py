@@ -3,14 +3,6 @@ from apps.users.models import Client
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 
-JOB_STATUS = [
-    ('active', 'Active'),
-    ('inactive', 'Inactive'),
-    ('assigned', 'Assigned'),
-    ('completed', 'Completed'),
-    ('cancelled', 'Cancelled'),
-]
-
 SERVICE_TYPE=[
     ('walker',"walker"),
     ("groomer",'groomer'),
@@ -66,6 +58,8 @@ class MyJobPost(models.Model):
 
     is_vaccinated = models.BooleanField(default=False)
     is_mixed_breed = models.BooleanField(default=False)
+
+    is_active = models.BooleanField(default=False)
 
     
 

@@ -15,21 +15,22 @@ function ProviderListing() {
 
   const [loading, setLoading] = useState(true);
   const [providers, setProviders] = useState([]);
+  const [activeServiceFilter,setActiveServiceFilter] = useState(null)
 
   let { queryResults,handleSq,setQueryResults } = useOutletContext()
   let { user } = useUserContext()
 
   // Fake loading simulation
-  useEffect( () => {
-
-     if(!sq.trim()) return 
-
+  useEffect( () => {  
+      console.log("sq",sq)
+     if(!sq || !sq.trim()) return 
+     setActiveServiceFilter(sq)
      setLoading(true)
 
      const fetchProvider = async () => {
          let result = await searchQueryJob(sq)
          if(!result.success){
-           return navigate("/")
+           return console.log("error:",result.error)
          } 
 
          setQueryResults(result.data || [])  
@@ -45,10 +46,9 @@ function ProviderListing() {
 
   const filterResults = async (e) => {
     const el = e.target.closest("span")
-    const type = el.dataset.type
-    
+    const type = el.dataset.type 
     if(!type) return 
-
+    setActiveServiceFilter(type)
     // fn  
     let res = await searchQueryJob(type)
     if(!res.success) return alert("query failed")
@@ -76,7 +76,7 @@ function ProviderListing() {
 
             <div onClick={(e) => filterResults(e) } className="serviceList">
               {["Walker","Groomer","Sitter","Care"].map(s => (
-                <span data-type={s} key={s} className="servicePill">
+                <span data-type={s} key={s} className={`servicePill ${activeServiceFilter === s.toLocaleLowerCase() ? "active": ""}`}>
                   {s}
                 </span>
               ))}
@@ -126,8 +126,8 @@ function ProviderListing() {
                 <button className="viewBtn"> Hire </button>
                 <div className="contactButtonDiv"> 
 
-                  <button className={user.has_subscription = false ? "" : "locked"}>
-                  {user.has_subscription ? <LockIcon size={12}/>: ""} Contact 
+                  <button className={user.has_subscription ? "" : "locked"}>
+                  {user.has_subscription ? "": <LockIcon size={12}/>} Contact 
                   </button>
 
                 </div>

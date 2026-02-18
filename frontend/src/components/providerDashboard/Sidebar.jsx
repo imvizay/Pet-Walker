@@ -20,13 +20,14 @@ function Sidebar(){
     </div>
 
       <nav className="navLinks">
-        <Link className="link" to='/service-provider'>Dashboard</Link>
-        <Link className="link">Search Jobs</Link>
+        <Link className="link" to='/provider-dashboard'>Dashboard</Link>
+        <Link className="link" to="listed-jobs">Search Jobs</Link>
 
         <Link className="link">Bookings</Link>
         <Link className="link">Messages</Link>
-      </nav>
+       
 
+      </nav>
       <button onClick={()=>navigate(`service-panel/${user.id}/`)} className="newServiceBtn">
         + New Service
       </button>

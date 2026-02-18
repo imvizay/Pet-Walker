@@ -18,6 +18,7 @@ class PetBreedSerializer(serializers.ModelSerializer):
 
 class MyJobPostSerializer(serializers.ModelSerializer):
     pet_profile =serializers.ImageField(required=False,allow_null=True)
+    is_active = serializers.BooleanField(allow_null=True,required=False)
     class Meta:
         model = MyJobPost
         fields = "__all__"
@@ -103,6 +104,34 @@ class DiscoverProviderSerializer(serializers.ModelSerializer):
             "has_subscription",
             "services"
         ]
+
     def get_services(self, client):
      return client.services.filter(is_active=True).values_list("service", flat=True)
 
+
+class DiscoverJobsSerializer(serializers.ModelSerializer):
+    pet_type = serializers.CharField(source="pet_type.pet_type", read_only=True)
+    pet_breed = serializers.CharField(source="pet_breed.breed_name", read_only=True)
+    owner_name = serializers.CharField(source="owner.username", read_only=True)
+  
+    class Meta:
+        model = MyJobPost
+        fields = [
+            "id",
+            "owner_name",
+            "pet_profile",
+            "owner",
+            "pet_name",
+            "pet_type",
+            "pet_breed",
+            "gender",
+            "age",
+            "weight",
+            "start_time",
+            "end_time",
+            "job_date",
+            "description",
+            "service_type",
+        ]
+
+  
