@@ -1,4 +1,6 @@
 import api from "../../axios"
+
+// Get application at owner dashboard
 export const getApplications = async () => {
 
     try{
@@ -16,4 +18,48 @@ export const getApplications = async () => {
         }
     }
 
+}
+
+export const onAccept = async (applicationId,applicantId,applicationStatus) => {
+
+    const payload = {
+        applicant_id:applicantId,
+        action:applicationStatus
+    }
+
+    try{
+        let res = await api.patch(`/application/status/${applicationId}/`,payload)
+        return{
+            success:true,
+            data:res.data
+        }
+    } catch(err){
+        return{
+            success:false,
+            error:err?.response?.data
+        }
+    }
+}
+
+
+
+export const onReject = async (applicationId,applicantId,applicationStatus) => {
+
+    const payload = {
+        applicant_id:applicantId,
+        action:applicationStatus
+    }
+
+    try{
+        let res = await api.patch(`/application/status/${applicationId}/`,payload)
+        return{
+            success:true,
+            data:res.data
+        }
+    } catch(err){
+        return{
+            success:false,
+            error:err?.response?.data
+        }
+    }
 }

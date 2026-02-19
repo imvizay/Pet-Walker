@@ -12,7 +12,7 @@ import CustomerDashboardLayout from './layout/dashboard/CustomerDashboard'
 import CustomerDashboard from './pages/customer/Dashboard'
 
 import JobPostForm from './components/forms/customer/JobPostForm'
-import FindProviders from './pages/customer/searchProvider/FindProvider'
+
 import ManagePost from './pages/customer/ManagePost'
 
 import ProviderDashboard from './layout/dashboard/ServiceProvider'
@@ -22,6 +22,7 @@ import ServicesPanel from './components/providerDashboard/service_profile/Servic
 import ProviderListing from './pages/customer/ProviderListing'
 import JobsList from './pages/serviceprovider/ListedJobs'
 import ApplicationsNotificationPanel from './pages/customer/Applications'
+import ApplicationNotifications from './components/providerDashboard/application/Message'
 
 function App() {
   return (
@@ -37,7 +38,6 @@ function App() {
         <Route index element={<CustomerDashboard/>}/>
         
         <Route path='jobpost' element={<JobPostForm/>}/>
-        <Route path='searchProvider' element={<FindProviders/>}/>
         <Route path='manage/:id' element={<ManagePost/>}/>
         <Route path='editpost/:id' element={<JobPostForm/>}/>
 
@@ -57,6 +57,7 @@ function App() {
         <Route path='service-panel/:id' element = {<ServicesPanel/>}/>
 
         <Route path='listed-jobs' element={<JobsList/>}/>
+        <Route path="application" element={<ApplicationNotifications/>}/>
 
       </Route>
 

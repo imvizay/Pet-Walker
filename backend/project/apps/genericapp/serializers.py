@@ -7,6 +7,7 @@ from apps.job.models import MyJobPost
 from rest_framework.validators import ValidationError
 
 class ApplicationSerializer(serializers.ModelSerializer):
+
     job_post = serializers.PrimaryKeyRelatedField(
                         queryset=MyJobPost.objects.all() ,
                         write_only=True
@@ -15,10 +16,19 @@ class ApplicationSerializer(serializers.ModelSerializer):
     applicant = serializers.CharField(source="applicant.username",read_only=True)
     job_name = serializers.CharField(source="job_post.service_type",read_only=True)
     
+    pet_name = serializers.CharField(source="job_post.pet_name",read_only=True)
+    job_date = serializers.CharField(source="job_post.job_date",read_only=True)
+    profile_pic = serializers.ImageField(source="owner.profile_pic",read_only=True)
+    service_type = serializers.CharField(source="job_post.service_type",read_only=True)
+    applicant_id = serializers.CharField(source="applicant.id",read_only=True)
+   
+
 
     class Meta:
         model = Applications
-        fields = ["applicant","job_post","owner","job_name"]
+        fields = ["id","applicant","job_post","owner","job_name","pet_name","job_date","profile_pic","service_type","applicant_id","status"]
+        read_only_field = ["id","status"]
+        
 
     def validate(self,attrs):
         request = self.context["request"]

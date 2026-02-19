@@ -9,5 +9,4 @@ urlpatterns = [
     path('google/', google_authentication, name="google-auth"),
     path('login/', TokenObtainPairView.as_view() ,name="login-view"),
     path('login/refresh/', TokenRefreshView.as_view() ,name="login-refresh-view")
-
 ]

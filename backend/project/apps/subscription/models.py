@@ -64,18 +64,13 @@ class SubscribedUserPlan(models.Model):
 # PROVIDER SERVICE
 
 class ProviderService(models.Model):
+
     SERVICES_CHOICE = [('walker','walker'),('sitter','sitter'),('groomer','groomer'),('care','care/trainer')]
-    
     user = models.ForeignKey(Client,on_delete=models.CASCADE,related_name="services")
-    service = models.CharField(max_length=20,choices=SERVICES_CHOICE,unique=True)
-
+    service = models.CharField(max_length=20,choices=SERVICES_CHOICE)
     is_active = models.BooleanField(default=False)
-
     is_published = models.BooleanField(default=False)
-
     created_at = models.DateTimeField(auto_now_add=True)
-
-    
 
     class Meta:
         unique_together = ['service','user']

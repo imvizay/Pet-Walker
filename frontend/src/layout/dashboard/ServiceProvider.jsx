@@ -9,16 +9,11 @@ import { getServices } from '../../api/providerApi/manageServices';
 import { publishServiceCall } from '../../api/providerApi/manageServices';
 
 
-
-
-
 function ProviderDashboard() {
 
   const [hasSubscription,setSubscription] = useState({})
   const [activeServices,setActiveService] = useState([])
-  const [alreadyActivated,setAlreadyActivated] = useState([])
-
- 
+  const [alreadyActivated,setAlreadyActivated] = useState([]) 
 
   // GET SUBSCRIPTION & ACTIVE SERVICE DATA 
   useEffect(()=>{
@@ -32,6 +27,7 @@ function ProviderDashboard() {
         localStorage.setItem("subscription",JSON.stringify(res.data)) // subscription detail is set on localstorage
 
     }
+
     const loadActivatedServices = async () => {
       let res = await getServices()
       if(!res.success) return console.log(res?.data?.error)
@@ -40,10 +36,11 @@ function ProviderDashboard() {
       setAlreadyActivated(activated)   
     }
 
-    loadSubscription()
-    loadActivatedServices()
+    loadSubscription() // subscription status
+    loadActivatedServices() // activated services
   
   },[])
+
 
 
   // TOGGLE SERVICE - PUBLISHED / UNPUBLISHED

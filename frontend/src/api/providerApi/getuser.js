@@ -5,6 +5,7 @@ export const getCurrentUser = async () => {
   try {
     const res = await api.get("user/me/");
     console.log(res.data)
+    localStorage.setItem("user",JSON.stringify(res.data))
     return { success:true, data:res.data };
 
   } catch (error) {
@@ -20,6 +21,7 @@ export const getCurrentUser = async () => {
 export const getCurrentKyc = async () => {
   try {
     const res = await api.get("user/me/kyc/")
+    
     return { success:true, data:res.data }
 
   } catch (error) {

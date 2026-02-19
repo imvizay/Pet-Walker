@@ -20,6 +20,7 @@ def get_subscription_detail(request):
     subscription = SubscribedUserPlan.objects.filter(user=user.id,is_active=True).first()
 
     if not subscription:
+        # return SubscribedUserPlan.objects.filter(user=user.id,is_active=False,)
         raise ValidationError({"plan":"FREE"})
     
     serializer = SubscriptionPlanUserSerializer(subscription)
@@ -27,29 +28,75 @@ def get_subscription_detail(request):
     return Response(serializer.data)
     
     
+from rest_framework import status
 @api_view(["GET","POST","DELETE"])
-
 def activate_services(request):
     req_user = request.user
 
+    # ---------------- GET ----------------
     if request.method == "GET":
         qs = ProviderService.objects.filter(user=req_user)
-        serializer = ProviderServiceSerializer(qs,many=True)
-
+        serializer = ProviderServiceSerializer(qs, many=True)
         return Response(serializer.data)
-    
-    if request.method == "POST":
-        services = request.data
-        
-        for s in services:
-            ProviderService.objects.get_or_create(
-                user=request.user,
-                service=s,
-                is_active=True
-            )
 
+    # ---------------- POST ----------------
+    services = request.data
 
-        return Response({"msg":"Request Recieved services will be activated shortly."})
+    if not isinstance(services, list):
+        return Response(
+            {"error": "Send services as a list"},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    # ---- get subscription ----
+    sub = SubscribedUserPlan.objects.filter(
+        user=req_user,
+        is_active=True
+    ).select_related("subscription_plan").first()
+
+    # ---- determine limit ----
+    if not sub or sub.subscription_plan.plan_name == "FREE":
+        allowed = 1
+    else:
+        allowed = sub.subscription_plan.max_services   # or whatever your field is
+
+    # ---- count existing active services ----
+    active_count = ProviderService.objects.filter(
+        user=req_user,
+        is_active=True
+    ).count()
+
+    remaining_slots = max(allowed - active_count, 0)
+
+    if remaining_slots <= 0:
+        return Response(
+            {"error": f"Your plan allows only {allowed} active service(s)."},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    activated = []
+
+    for s in services:
+        if remaining_slots <= 0:
+            break
+
+        obj, created = ProviderService.objects.get_or_create(
+            user=req_user,
+            service=s
+        )
+
+        if not obj.is_active:
+            obj.is_active = True
+            obj.save()
+            activated.append(s)
+            remaining_slots -= 1
+
+    return Response({
+        "message": "Services activated",
+        "activated": activated,
+        "remaining_slots": remaining_slots
+    })
+
 
 @api_view(["POST"])
 def publish_service(request,pk):

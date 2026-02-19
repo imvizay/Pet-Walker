@@ -24,7 +24,9 @@ function Sidebar(){
         <Link className="link" to="listed-jobs">Search Jobs</Link>
 
         <Link className="link">Bookings</Link>
-        <Link className="link">Messages</Link>
+        <Link className="link" to="application">Applications</Link>
+       
+
        
 
       </nav>
