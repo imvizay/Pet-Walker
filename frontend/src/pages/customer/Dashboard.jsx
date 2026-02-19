@@ -8,6 +8,7 @@ import { ListFilterIcon, Plus, Search } from 'lucide-react'
 import JobListedCard from '../../components/cards/customer_dash/JobListedCard'
 import { getJobs } from '../../api/customerApi/jobApi'
 
+
 function CustomerDashboard() {
 
   let   {sq,setSq,handleSq } = useOutletContext() // query state , query setter , search query fn
@@ -15,10 +16,10 @@ function CustomerDashboard() {
   const [jobs,setJobs] = useState([])
   const [errors,setErrors] = useState(null)
 
+
   
   // GET JOBS FROM BACKEND
   useEffect(()=>{
-
     const user = JSON.parse(localStorage.getItem("user"))
     if(!user){
       setUser({})
@@ -35,8 +36,8 @@ function CustomerDashboard() {
           }
           setJobs(results.data)
     }
-
     fetchJobs()
+
   },[])
 
   

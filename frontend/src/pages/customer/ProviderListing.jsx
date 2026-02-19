@@ -6,6 +6,7 @@ import { useUserContext } from "../../contexts/UserContext";
 import { searchQueryJob } from "../../api/customerApi/jobApi";
 
 import { LockIcon } from 'lucide-react'
+import { hireRequest } from "../../api/customerApi/applications/sendRequest";
 
 
 function ProviderListing() {
@@ -55,6 +56,14 @@ function ProviderListing() {
 
     setQueryResults(res.data)
       
+  }
+
+  const handleRequest = async () => {
+      let res = await hireRequest()
+      if(!res.success){
+        return alert("faild sending hire request")
+      }
+      alert("request sended to the provider successfully,.please wait for their response")
   }
 
 
@@ -123,20 +132,17 @@ function ProviderListing() {
                 </div>
 
                <div className="commercialButtons">
-                <button className="viewBtn"> Hire </button>
+                <button onClick={handleRequest} className="viewBtn"> Request : </button>
                 <div className="contactButtonDiv"> 
 
                   <button className={user.has_subscription ? "" : "locked"}>
                   {user.has_subscription ? "": <LockIcon size={12}/>} Contact 
                   </button>
-
                 </div>
                </div>
-                 
               </div>
           ))
         }
-
       </div>
 
       {/* PAGINATION */}

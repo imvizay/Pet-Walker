@@ -12,7 +12,7 @@ class UserSerializer(ModelSerializer):
     role = serializers.CharField(write_only=True)
     password = serializers.CharField(write_only=True)
 
-    profile_pic = serializers.ImageField(read_only=True)
+    profile_pic = serializers.ImageField(required=False)
     
 
 

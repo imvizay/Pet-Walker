@@ -34,7 +34,7 @@ class UserManager(BaseUserManager):
 # Minimal Client Detail for registration
 class Client(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True,blank=False,null=False)
-    username = models.CharField(max_length=20, unique=True,blank=False,null=False)
+    username = models.CharField(max_length=20,blank=False,null=False)
     profile_pic = models.ImageField(upload_to="profile_pic",null=True,blank=True) 
 
     # address

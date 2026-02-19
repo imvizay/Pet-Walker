@@ -24,11 +24,8 @@ const ClientProfileUpdate = () => {
   const [preview, setPreview] = useState('/defaultuserimg.avif');
   const [loading, setLoading] = useState(false);
 
-  const imageSrc = !preview
-  ? "/defaultuserimg.avif"
-  : preview.startsWith("blob:") || preview.startsWith("http")
-  ? preview
-  : `${IMAGE_PREFIX}${preview}`;
+  const imageSrc = !preview ? "/defaultuserimg.avif" : preview.startsWith("blob:") || preview.startsWith("http")
+                                                                   ? preview : `${IMAGE_PREFIX}${preview}`
 
 
 

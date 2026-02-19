@@ -10,11 +10,13 @@ import { useState,useEffect } from 'react'
 function Home() {
 
    const [user,setUser] = useState({})
+   
     useEffect(()=>{
         const user = JSON.parse(localStorage.getItem("user"))
         if(!user) return
         setUser(user)
     },[])
+
 
   return (
     <>

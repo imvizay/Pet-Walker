@@ -6,6 +6,8 @@ import { capitalizeEachWord } from "../../utilis/capitalize";
 const PROFILE_URL = "http://localhost:8000"
 
 function ProfileCard({user}){
+  console.log("userProfilePic",user.profile_pic)
+  console.log("userProfilePic",user)
 
   let navigate = useNavigate()
   
@@ -15,7 +17,8 @@ function ProfileCard({user}){
     <div className="profileCard">
 
       <div className="profileHeader">
-        <img className="profileAvatar" src={`${PROFILE_URL}${user?.profile_pic}` || "./defaultuserimg.avif"}/>
+        <img className="profileAvatar" 
+            src={user?.profile_pic ? `${PROFILE_URL}${user?.profile_pic}` : "/defaultuserimg.avif"} />
         <div className="profileMeta">
           <h2 style={userNameStyle}>{user?.username?.toUpperCase() || ""}</h2>
           <p style={userRoleBox} >{capitalizeEachWord(user?.role)}</p>
