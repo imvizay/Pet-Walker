@@ -61,15 +61,16 @@ function ProviderListing() {
   const handleRequest = async () => {
       let res = await hireRequest()
       if(!res.success){
-        return alert("faild sending hire request")
+        alert("faild sending hire request")
+        return 
       }
       alert("request sended to the provider successfully,.please wait for their response")
   }
 
 
   useEffect(()=>{
-    console.log("find care:",queryResults)
-  },[])
+    console.log("find care:",queryResults[0])
+  },[1])
 
   return (
     <div className="providerListingGrid">
@@ -132,7 +133,7 @@ function ProviderListing() {
                 </div>
 
                <div className="commercialButtons">
-                <button onClick={handleRequest} className="viewBtn"> Request : </button>
+                <button onClick={()=>handleRequest()} className="viewBtn"> Request </button>
                 <div className="contactButtonDiv"> 
 
                   <button className={user.has_subscription ? "" : "locked"}>

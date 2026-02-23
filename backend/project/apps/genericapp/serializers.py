@@ -5,7 +5,7 @@ from apps.genericapp.models import Applications
 from apps.job.models import MyJobPost
 
 from rest_framework.validators import ValidationError
-
+from apps.users.models import Client
 class ApplicationSerializer(serializers.ModelSerializer):
 
     job_post = serializers.PrimaryKeyRelatedField(
@@ -15,7 +15,6 @@ class ApplicationSerializer(serializers.ModelSerializer):
 
     applicant = serializers.CharField(source="applicant.username",read_only=True)
     job_name = serializers.CharField(source="job_post.service_type",read_only=True)
-    
     pet_name = serializers.CharField(source="job_post.pet_name",read_only=True)
     job_date = serializers.CharField(source="job_post.job_date",read_only=True)
     profile_pic = serializers.ImageField(source="owner.profile_pic",read_only=True)
@@ -27,7 +26,7 @@ class ApplicationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Applications
         fields = ["id","applicant","job_post","owner","job_name","pet_name","job_date","profile_pic","service_type","applicant_id","status"]
-        read_only_field = ["id","status"]
+        read_only_field = ["id","status","owner"]
         
 
     def validate(self,attrs):
@@ -52,7 +51,7 @@ class ApplicationSerializer(serializers.ModelSerializer):
        request = self.context["request"]
        validated_data["applicant"] = request.user
        validated_data["job_post"] = validated_data["job_post"]
-       validated_data["owner"] = validated_data["owner_id"]
+       validated_data["owner"] = validated_data["owner"]
        
    
        return super().create(validated_data)

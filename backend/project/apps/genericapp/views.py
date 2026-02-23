@@ -76,6 +76,6 @@ class ProviderApplicationView(ListCreateAPIView):
         return qs
 
             
-# class CustomerHireRequest(ListCreateAPIView):
-#     queryset = Applications.objects.all()
-#     serializer_class = ApplicationSerializer
+class CustomerHireRequest(ListCreateAPIView):
+    queryset = Applications.objects.all()
+    serializer_class = ApplicationSerializer

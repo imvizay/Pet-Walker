@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useUserContext } from "../../../contexts/UserContext";
 import '../../../assets/css/service_provider/listed_jobs/listed_jobs.css'
 
@@ -16,7 +16,7 @@ const ListedJobCard = ({ job }) => {
     if (!user) return alert("Login first");
     const data = {
       "job_post":Number(job.id) || 0,
-      "owner_id":Number(job.owner) || 0,
+      "owner":Number(job.owner) || 0,
       "has_applied":null,
     }
     try {
@@ -33,6 +33,10 @@ const ListedJobCard = ({ job }) => {
       setApplying(false);
     }
   }
+
+  useEffect(()=>{
+    console.log("job card at provider dashboard",job)
+  },[])
   
 
   return (

@@ -13,7 +13,6 @@ class SubscriptionPlan(models.Model):
     PLAN_DURATION = [("monthly","MONTHLY"),('yearly',"YEARLY")]
     plan_name = models.CharField(max_length=30,unique=True)
     price = models.DecimalField(decimal_places=2,max_digits=6 ) # 4 digit before decimal
-    currency = models.CharField(default="INR",null=True,blank=True)
     duration = models.CharField(max_length=20,choices=PLAN_DURATION)
     max_service = models.PositiveIntegerField(help_text="maximum service user can activate" , default=1)
     description = models.TextField(help_text="perks of the plan")
