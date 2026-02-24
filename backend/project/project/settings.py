@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     'apps.users',
     'apps.genericapp',
     'apps.subscription',
-    "django_cleanup",
     'corsheaders'
 ]
 

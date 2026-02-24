@@ -1,8 +1,9 @@
 import api from "../../axios";
 
-export const hireRequest = async () => {
+export const requestProvider = async (data) => {
+    console.log("Inside Provider Request API.")
     try{
-        let res = api.post('/application/hire-request/',)
+        let res = api.post('/application/request-provider/',data)
         return{
             success:true,
             data:res.data

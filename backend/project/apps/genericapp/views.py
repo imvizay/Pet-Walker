@@ -1,16 +1,57 @@
 from django.shortcuts import render
 from rest_framework.generics import ListCreateAPIView,UpdateAPIView
-from apps.genericapp.models import Applications
+from apps.genericapp.models import ProviderApplication,CustomerApplication
 from rest_framework.decorators import action
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
-from apps.genericapp.serializers import ApplicationSerializer
+
+from apps.genericapp.serializers import ApplicationSerializer,CustomerApplicationSerializer
 # Create your views here.
 
 
+# Customer( create application by service provider for the job post of customer )
+class ProviderApplicationView(ListCreateAPIView):
+    """
+    Fetches all application either pending rejected or accepted by the pet owner/customer at provider dashboard.
+    """
+    queryset = ProviderApplication.objects.all()
+    serializer_class = ApplicationSerializer
+
+    def get_queryset(self):
+        
+        user = self.request.user
+
+        if not user.is_authenticated:
+            return ProviderApplication.objects.none()
+        
+        qs = ProviderApplication.objects.filter(
+                                        applicant = user,
+                                        status__in = ["accepted","rejected","pending"]).select_related(
+                                                                                        "job_post",
+                                                                                        "applicant"
+                                                                                        )   
+        return qs
+
+
+
+# Customer Application View(fetches all applications regarding a job post)
+class OwnerApplicationView(ListCreateAPIView):
+    """
+    Fetches all application request that is pending at customer dashboard of the service provider.
+    """
+    queryset = ProviderApplication.objects.all()
+    serializer_class = ApplicationSerializer
+
+    def get_queryset(self):
+        user  = self.request.user
+        return ProviderApplication.objects.filter(owner=user,status="pending").select_related("job_post","applicant")
+    
+# Customer Dashboard (updates application recived on a job post.)
 class UpdateApplication(UpdateAPIView):
-    queryset = Applications.objects.all()
+    """
+    Updating status of application sended by the service provider 
+    """
+    queryset = ProviderApplication.objects.all()
     serializer_class = ApplicationSerializer
 
     def patch(self, request, *args, **kwargs):
@@ -18,11 +59,11 @@ class UpdateApplication(UpdateAPIView):
         post_owner = request.user
 
         try:
-            application = Applications.objects.get( id=kwargs.get("pk"),
+            application = ProviderApplication.objects.get( id=kwargs.get("pk"),
                                                     owner=post_owner,
                                                     applicant = applicant_id
                                                   )
-        except Applications.DoesNotExist:
+        except ProviderApplication.DoesNotExist:
             return Response(
                             {"error":"application not found"},
                             status=status.HTTP_404_NOT_FOUND
@@ -46,36 +87,36 @@ class UpdateApplication(UpdateAPIView):
 
 
 
+# Provider Dashboard ( create application of customer for the services he sended request to the service provider. )  
+class CustomerApplicationView(ListCreateAPIView):
 
-class OwnerApplicationView(ListCreateAPIView):
-    queryset = Applications.objects.all()
-    serializer_class = ApplicationSerializer
-
-    def get_queryset(self):
-        user  = self.request.user
-        return Applications.objects.filter(owner=user,status="pending").select_related("job_post","applicant")
+    """
+    View for Customer to send application request to the service provider for the services that has published.
+    """
+    queryset = CustomerApplication.objects.all()
+    serializer_class = CustomerApplicationSerializer
 
 
-class ProviderApplicationView(ListCreateAPIView):
-    queryset = Applications.objects.all()
-    serializer_class = ApplicationSerializer
+# Update Customers Request sended to provider
 
-    def get_queryset(self):
-        
-        user = self.request.user
+class CustomerApplicationUpdateView(UpdateAPIView):
+    queryset = CustomerApplication.objects.all()
+    serializer_class = CustomerApplicationSerializer
 
-        if not user.is_authenticated:
-            return Applications.objects.none()
-        
-        qs = Applications.objects.filter(
-                                        applicant = user,
-                                        status__in = ["accepted","rejected","pending"]).select_related(
-                                                                                        "job_post",
-                                                                                        "applicant"
-                                                                                        )   
-        return qs
+    def patch(self, request, *args, **kwargs):
 
-            
-class CustomerHireRequest(ListCreateAPIView):
-    queryset = Applications.objects.all()
-    serializer_class = ApplicationSerializer
+        provider = request.user
+        new_status = request.data.get("status")
+
+        if new_status not in ["accepted", "rejected"]:
+            return Response( {"error": "Invalid status"}, status=status.HTTP_400_BAD_REQUEST )
+
+        try:
+            application = CustomerApplication.objects.get( id=kwargs.get("pk"), provider=provider )
+        except CustomerApplication.DoesNotExist:
+            return Response( {"error": "Application not found"}, status=status.HTTP_404_NOT_FOUND )
+
+        application.status = new_status
+        application.save()
+
+        return Response({ "message": "Status updated successfully", "status": application.status }, status=status.HTTP_200_OK)

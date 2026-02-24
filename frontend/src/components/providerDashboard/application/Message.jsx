@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { providerApplication } from "../../../api/providerApi/applications/application";
+import { providerApplication , customerRequestAccpetOrReject } from "../../../api/providerApi/applications/application";
 import '../../../assets/css/service_provider/application.css'
 
 const ApplicationNotifications = () => {
@@ -25,28 +25,46 @@ const ApplicationNotifications = () => {
   const rejected = applications.filter(a => a.status === "rejected")
   const pending  = applications.filter(a => a.status === "pending")
 
+  useEffect(()=>{
+    console.log("At Provider Application Page Applicatons Fetches :",applications)
+  },[])
+
+
+  const handleCustomerRequest = async (application_id,customer_id,status) => {
+    const payload = {
+      customer:customer_id,
+      status:status
+    }
+
+    let res = await customerRequestAccpetOrReject(application_id,payload)
+    if(!res.success){
+      alert("updating request status failed")
+      return
+    }
+    alert("request has been updated")
+
+  }
+
   
-  const Card = ({item, type}) => (
-    <div className={`appCard ${type}`}>
-      <img
-        src={item.profile_pic || "/defaultuserimg.avif"}
-        alt=""
-        className="avatar"
-      />
+  const Card = ({ item, type }) => (
+      <div className={`appCard ${type}`}>
 
-      <div className="info">
-        <h4>{item.applicant}</h4>
-        <p className="pet">Petname : {item.pet_name.toUpperCase()}</p>
-        <p className="job">{item.job_name.toUpperCase()}</p>
-      </div>
+        <img src={item.customer_profile_pic || "/defaultuserimg.avif"} alt="" className="avatar" />
 
-      <div className="status">
-        {type === "accepted" && "Accepted"}
-        {type === "rejected" && "Rejected"}
-        {type === "pending"  && "Pending"}
+        <div className="info">
+          <h4>{item.customer_username}</h4>
+          <p>{item.customer_email}</p>
+          <p className={`statusText ${type}`}> Status: {type.charAt(0).toUpperCase() + type.slice(1)} </p>
+        </div>
+
+        {type === "pending" && (
+          <div className="actionButtons">
+            <button onClick={()=>handleCustomerRequest(item.id,item.customer,"accepted")} className="btn1">Accept</button>
+            <button onClick={()=>handleCustomerRequest(item.id,item.customer,"rejected")} className="btn2">Reject</button>
+          </div>
+        )}
       </div>
-    </div>
-  );
+  )
 
   if (loading) return <p>Loading applications...</p>
 

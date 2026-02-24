@@ -6,7 +6,7 @@ import { useUserContext } from "../../contexts/UserContext";
 import { searchQueryJob } from "../../api/customerApi/jobApi";
 
 import { LockIcon } from 'lucide-react'
-import { hireRequest } from "../../api/customerApi/applications/sendRequest";
+import { requestProvider } from "../../api/customerApi/applications/sendRequest";
 
 
 function ProviderListing() {
@@ -58,8 +58,12 @@ function ProviderListing() {
       
   }
 
-  const handleRequest = async () => {
-      let res = await hireRequest()
+  const handleRequest = async (p) => {
+    console.log("Inside Handle Request",p)
+      const data = {
+        provider:p.id,
+      }
+      let res = await requestProvider(data)
       if(!res.success){
         alert("faild sending hire request")
         return 
@@ -70,7 +74,7 @@ function ProviderListing() {
 
   useEffect(()=>{
     console.log("find care:",queryResults[0])
-  },[1])
+  },[2])
 
   return (
     <div className="providerListingGrid">
@@ -133,7 +137,7 @@ function ProviderListing() {
                 </div>
 
                <div className="commercialButtons">
-                <button onClick={()=>handleRequest()} className="viewBtn"> Request </button>
+                <button onClick={()=>handleRequest(p)} className="viewBtn"> Request </button>
                 <div className="contactButtonDiv"> 
 
                   <button className={user.has_subscription ? "" : "locked"}>

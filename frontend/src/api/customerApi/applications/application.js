@@ -20,6 +20,7 @@ export const getApplications = async () => {
 
 }
 
+// Accept application recived from customer for hiring us
 export const onAccept = async (applicationId,applicantId,applicationStatus) => {
 
     const payload = {
