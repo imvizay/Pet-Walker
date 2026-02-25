@@ -3,20 +3,22 @@ import CustomerDashboardNavbar from '../../components/commmon/CustomerNavbar'
 import { Outlet } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 
-import { searchQueryJob } from '../../api/customerApi/jobApi'
-
 
 function CustomerDashboardLayout() {
   const navigate = useNavigate()
   const [searchQuery,setSearchQuery] = useState("")
   const [queryResults,setQueryResults] = useState([])
 
+  useEffect(()=>{
+     console.trace("TRIGGER RENDER AT CUSTOMER DASHBOARD")
+  },[])
+
   
   const handleSearchQuery = async () => {
     if(!searchQuery.trim()) return;
     navigate(`search/${searchQuery}`)
   }
-
+  
 
   return (
    <>

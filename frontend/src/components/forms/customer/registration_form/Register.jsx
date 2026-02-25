@@ -6,6 +6,7 @@ import { PawPrint, Briefcase, Share2 } from "lucide-react";
 import GoogleLoginButton from "../../../google/GoogleButton";
 
 import { createUser, loginUser } from "../../../../api/auth";
+
 import { accountRegistrationVal } from "../../../../utilis/validate_registration";
 import fetchCurrentUser from "../../../../api/currentuser";
 
@@ -79,8 +80,8 @@ function AuthForm() {
       localStorage.setItem("refresh",result.data.refresh)
 
       await fetchCurrentUser()
-      navigate(`/`)
-      return alert("Logged In.")
+      return alert("Logged In.",navigate('/'))
+      
     }
 
     // REGISTER
@@ -99,7 +100,7 @@ function AuthForm() {
       })
 
       if(!result.success){
-        setErrors(result.errors || {})
+        setErrors(result.error || {})
         return
       }
 

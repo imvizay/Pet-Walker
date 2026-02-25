@@ -11,8 +11,10 @@ const SUBSCRIPTION_PACKS = [
     price: "₹0",
     perks: [
       "Basic walker search",
-      "Manual booking",
-      "Standard email support"
+      "Can send request only.",
+      "Can activate 01 service at max to publish",
+      "No membership badges.",
+      "Services featurance is 40% less than members."
     ]
   },
   {
@@ -22,10 +24,11 @@ const SUBSCRIPTION_PACKS = [
     price: "₹500",
     is_popular: true,
     perks: [
+      "Have access of free plan perks.",
       "Priority walker matching",
-      "Premium insurance coverage",
-      "GPS live tracking",
-      "24/7 priority support"
+      "Have access to contact details for contacting pet owners.",
+      "Membership Badges.",
+      "Activate all (04) services.",
     ]
   }
 ];
