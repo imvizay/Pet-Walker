@@ -12,17 +12,17 @@ function Navbar() {
   useEffect(() => {
     if (!user?.id) return;
 
-    if (user.role.includes("customer","provider")) {
-      navigate("/customer-dashboard", { replace: true });
-    } 
-    else if (user.role.includes("customer")) {
-      navigate("/customer-dashboard", { replace: true });
-    } 
-    else if (user.role.includes("provider")) {
-      navigate("/provider-dashboard", { replace: true });
-    }
+  //   if (user.role.includes("customer","provider")) {
+  //     navigate("/customer-dashboard", { replace: true });
+  //   } 
+  //   else if (user.role.includes("customer")) {
+  //     navigate("/customer-dashboard", { replace: true });
+  //   } 
+  //   else if (user.role.includes("provider")) {
+  //     navigate("/provider-dashboard", { replace: true });
+  //   }
 
-  }, [user, navigate]);
+  }, [user]);
 
   // ---------- NOT LOGGED IN ----------
   if (!user?.id) {

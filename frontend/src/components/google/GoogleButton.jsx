@@ -24,7 +24,7 @@ export default function GoogleLoginButton(){
            localStorage.setItem("accessToken",res.data.access)
 
            await fetchCurrentUser()
-           navigate(`/${role}Dashboard`) // customer dashboard/provider dashboard
+           navigate('/') 
         }
         catch(err){
             console.log("error:",err)
