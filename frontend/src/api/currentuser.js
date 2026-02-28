@@ -12,6 +12,7 @@ const fetchCurrentUser = async () => {
             }
         })
         localStorage.setItem("user",JSON.stringify(res.data))
+        console.log("user credentials : ",res.data)
         return res.data
     }
     catch(error){
