@@ -31,7 +31,7 @@ ALLOWED_HOSTS = ["*"]
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    "https://pet-walker-5.onrender.com"
+    "https://idyllic-mermaid-0a40f9.netlify.app",
 ]
 
 # Application definition
@@ -73,8 +73,6 @@ SIMPLE_JWT = {
     # Token rotation (optional)
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": True,
-
-
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
