@@ -2,6 +2,10 @@
 GLOBAL LAYOUT
 ========================= */
 
+body{
+  overflow-x:hidden;
+}
+
 .dashboardLayout{
   display:grid;
   grid-template-columns:240px 1fr;
@@ -25,7 +29,6 @@ GLOBAL LAYOUT
   display:flex;
   flex-direction:column;
   gap:24px;
-  height: 80vh;
 }
 
 /* =========================
@@ -39,13 +42,16 @@ SIDEBAR
   flex-direction:column;
   justify-content:space-between;
   box-shadow:4px 0 12px rgba(0,0,0,.05);
+  width:240px;
 }
+
 .sidebar div p{
-    font-size: 10px;
-    text-align: start;
-    padding-left: 10px;
-    text-transform: uppercase;
+  font-size:10px;
+  text-align:start;
+  padding-left:10px;
+  text-transform:uppercase;
 }
+
 .logoText{
   font-size:22px;
   font-weight:700;
@@ -59,7 +65,7 @@ SIDEBAR
 
 .navLinks .link{
   background:none;
-  text-decoration: none;
+  text-decoration:none;
   border:none;
   text-align:left;
   padding:10px;
@@ -82,6 +88,23 @@ SIDEBAR
   cursor:pointer;
 }
 
+.mobileMenuToggle{
+  display:none;
+  position:fixed;
+  top:18px;
+  left:18px;
+ 
+  z-index:1200;
+  cursor:pointer;
+}
+
+.sidebarOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.4);
+  z-index:1000;
+}
+
 /* =========================
 HEADER
 ========================= */
@@ -98,32 +121,25 @@ HEADER
 }
 
 .headerInfo p{
-    font-size: 12px;
-    color: #27c46b94;
+  font-size:12px;
+  color:#27c46b94;
 }
+
 .headerActions{
   display:flex;
   gap:14px;
 }
 
 .iconButton{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 30px;
-    height: 30px;
-    border: 1px solid gray;
-    padding: 5px;
-    border-radius: 50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width:30px;
+  height:30px;
+  border:1px solid gray;
+  padding:5px;
+  border-radius:50%;
 }
-/* active notification */
-/* .notification{
-    width: 20px;
-    height: 20px;
-    border: 2px solid red;
-    background-color: white;
-    color: red;
-} */
 
 /* =========================
 CARDS
@@ -171,6 +187,7 @@ PROFILE
   display:flex;
   gap:14px;
   margin-top:16px;
+  flex-wrap:wrap;
 }
 
 /* =========================
@@ -178,27 +195,24 @@ SERVICES
 ========================= */
 
 .serviceCardContainer{
-   height: 50vh;
-    display: grid;
-   
-    grid-template-rows:auto 1fr ;
-    
+  display:flex;
+  flex-direction:column;
 }
 
 .serviceCardContainer h3{
-    padding-left: 12px;
-    padding-top: 12px;
+  padding-left:12px;
+  padding-top:12px;
 }
 
 .serviceBox{
-  display: grid;
-  place-items: center;
-  border: 1px solid red;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
 }
 
 .serviceBox .serviceItem span{
-  color: gray;
-  letter-spacing: 1.2px;
+  color:gray;
+  letter-spacing:1.2px;
 }
 
 /* =========================
@@ -236,3 +250,95 @@ SUBSCRIPTION
   cursor:pointer;
 }
 
+/* =========================
+MOBILE RESPONSIVE
+========================= */
+
+@media (max-width:768px){
+
+  .dashboardLayout{
+    grid-template-columns:1fr;
+  }
+
+  .dashboardGrid{
+    display:flex;
+    flex-direction:column;
+  }
+
+  .leftColumn,
+  .rightColumn{
+    height:auto;
+  }
+
+  .dashboardMain{
+    padding:20px 16px;
+  }
+
+  .headerWrapper{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:10px;
+  }
+
+  .headerActions{
+    width:100%;
+    justify-content:flex-end;
+  }
+
+  .mobileMenuToggle{
+    display:block;
+    left: 0px;
+    top: 0px;
+  }
+
+  /* Sidebar Slide Animation Fix */
+  .sidebar{
+    position:fixed;
+    top:0;
+    left:0;
+    height:95vh;
+    width:240px;
+    z-index:1100;
+    transform:translateX(-100%);
+    transition:transform .3s ease;
+  }
+
+  .sidebar.open{
+    transform:translateX(0);
+  }
+
+  /* Service Cards Responsive */
+  .serviceRowCard{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:12px;
+  }
+
+  .serviceTop{
+    flex-wrap:wrap;
+    gap:12px;
+  }
+
+  .statusGroup{
+    flex-wrap:wrap;
+    gap:12px;
+  }
+
+}
+
+@media (max-width:360px){
+
+  .headerInfo h2{
+    font-size:18px;
+  }
+
+  .headerInfo p{
+    font-size:11px;
+  }
+
+  .profileAvatar{
+    width:48px;
+    height:48px;
+  }
+
+}

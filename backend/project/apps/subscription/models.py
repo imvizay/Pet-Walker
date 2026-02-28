@@ -20,7 +20,7 @@ class SubscriptionPlan(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.plan_name} - {self.price} {self.currency}"
+        return f"{self.plan_name} - {self.price}"
     
     
 # SUBSCRIBED PLAN

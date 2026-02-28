@@ -95,3 +95,94 @@
   font-weight: 700;
   cursor: pointer;
 }
+
+
+/* Media query */
+@media (max-width: 360px) {
+
+  .cust_logo {
+    font-size: 14px;
+  }
+
+  .cust_avatar {
+    width: 28px;
+    height: 28px;
+  }
+
+  .cust_bell svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .logoutBtn button {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+}
+
+
+@media (max-width: 480px) {
+
+  .customerIndexPageContainer {
+    padding: 20px 16px;
+  }
+
+  .customerIndexHead h1 {
+    font-size: 18px;
+  }
+
+  .userSpan {
+    font-size: 20px;
+  }
+
+  .searchBox {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .searchBtn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .customerIndexLeg {
+    grid-template-columns: 1fr;  /* stack layout */
+    gap: 24px;
+  }
+
+  .createJobPost h2 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .cust_navbar {
+    padding: 0 16px;
+    height: 60px;
+  }
+
+  .cust_logo {
+    font-size: 16px;
+  }
+
+  .cust_navLinks {
+    display: none;   /* hide links on small screens */
+  }
+
+  .cust_navRight {
+    gap: 10px;
+  }
+
+  .cust_avatar {
+    width: 34px;
+    height: 34px;
+  }
+
+  .logoutBtn button {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+}

@@ -144,3 +144,102 @@
 .actionButtons button:hover {
     transform: translateX(4px);
 }
+
+
+/* Media query */
+
+@media (max-width: 480px) {
+
+  .managePostContainer {
+    padding: 20px 16px;
+  }
+
+  .manageHeading h1 {
+    font-size: 22px;
+  }
+
+  .manageBody {
+    grid-template-columns: 1fr;   /* stack vertically */
+    gap: 20px;
+  }
+
+  .cardImage img {
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .petJobCard {
+    border-radius: 14px;
+  }
+
+  .actionContainer {
+    padding: 18px;
+  }
+
+  .actionHeader {
+    align-items: center;
+  }
+
+  .priceRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .actionButtons button {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 360px) {
+
+  .managePostContainer {
+    padding: 16px 12px;
+  }
+
+  .manageHeading h1 {
+    font-size: 18px;
+  }
+
+  .manageHeading p {
+    font-size: 13px;
+  }
+
+  .cardImage img {
+    height: 170px;
+  }
+
+  .cardContent h3 {
+    font-size: 16px;
+  }
+
+  .metaRow {
+    flex-wrap: wrap;
+    font-size: 12px;
+  }
+
+  .price {
+    font-size: 18px;
+  }
+
+  .fareType {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+
+  .actionContainer {
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .actionButtons button {
+    padding: 8px;
+    font-size: 13px;
+  }
+
+  .statusBadge {
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+}

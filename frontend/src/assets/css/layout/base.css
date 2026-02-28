@@ -8,7 +8,14 @@
   justify-content: space-between;
   font-family: system-ui, -apple-system, sans-serif;
 }
+.hamburger {
+  display: none;
+  cursor: pointer;
+}
 
+.mobileMenu {
+  display: none;
+}
 .navbarBrand {
   display: flex;
   align-items: center;
@@ -95,6 +102,71 @@
 /* MAIN */
 #main{
     min-height: 100vh;
+}
+
+
+/* header media query */
+@media (max-width: 360px) {
+
+  .brandText {
+    font-size: 16px;
+  }
+
+  .logoDot {
+    width: 32px;
+    height: 32px;
+  }
+
+  .mobileMenu {
+    padding: 16px;
+    gap: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .navbar {
+    padding: 0 16px;
+  }
+
+  .navbarLinks,
+  .navbarActions {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .mobileMenu {
+    position: absolute;
+    top: 64px;
+    left: 0;
+    width: 100%;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 18px;
+    border-top: 1px solid #eee;
+    transform: translateY(-20px);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 1000;
+  }
+
+  .mobileMenu.open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobileMenu a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+  }
 }
 
 
