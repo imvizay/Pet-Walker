@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    "https://pet-walker-5.onrender.com"
 ]
 
 # Application definition
