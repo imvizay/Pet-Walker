@@ -80,8 +80,7 @@ function AuthForm() {
       localStorage.setItem("refresh",result.data.refresh)
 
       await fetchCurrentUser()
-      return alert("Logged In.",navigate('/'))
-      
+      return alert("Logged In.")      
     }
 
     // REGISTER

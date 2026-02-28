@@ -1,30 +1,14 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import '../../assets/css/layout/base.css'
-import { PawPrint } from 'lucide-react'
-import { useEffect } from "react";
+import { PawPrint, Menu, X } from 'lucide-react'
+import { useState } from "react";
 import { useUserContext } from "../../contexts/UserContext";
 
 function Navbar() {
 
   const { user, logoutUser } = useUserContext();
-  const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  useEffect(() => {
-    if (!user?.id) return;
-
-  //   if (user.role.includes("customer","provider")) {
-  //     navigate("/customer-dashboard", { replace: true });
-  //   } 
-  //   else if (user.role.includes("customer")) {
-  //     navigate("/customer-dashboard", { replace: true });
-  //   } 
-  //   else if (user.role.includes("provider")) {
-  //     navigate("/provider-dashboard", { replace: true });
-  //   }
-
-  }, [user]);
-
-  // ---------- NOT LOGGED IN ----------
   if (!user?.id) {
     return (
       <header className="navbar">
@@ -33,6 +17,7 @@ function Navbar() {
           <h1 className="brandText">PetWalker</h1>
         </div>
 
+        {/* Desktop Links */}
         <nav className="navbarLinks">
           <Link to="/">How it works</Link>
           <Link to="/">Pricing</Link>
@@ -43,11 +28,24 @@ function Navbar() {
           <Link className="btnSecondary" to="/auth/login">Login</Link>
           <Link className="btnPrimary" to="/auth/register">Sign Up</Link>
         </div>
+
+        {/* Hamburger */}
+        <div className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
+          {menuOpen ? <X size={26} /> : <Menu size={26} />}
+        </div>
+
+        {/* Mobile Menu */}
+        <div className={`mobileMenu ${menuOpen ? "open" : ""}`}>
+          <Link to="/" onClick={() => setMenuOpen(false)}>How it works</Link>
+          <Link to="/" onClick={() => setMenuOpen(false)}>Pricing</Link>
+          <Link to="/" onClick={() => setMenuOpen(false)}>Find Walkers</Link>
+          <Link to="/auth/login" onClick={() => setMenuOpen(false)}>Login</Link>
+          <Link to="/auth/register" onClick={() => setMenuOpen(false)}>Sign Up</Link>
+        </div>
       </header>
-    );
+    )
   }
 
-  // ---------- LOGGED IN ----------
   return (
     <header className="navbar">
       <div className="navbarBrand">
@@ -56,16 +54,12 @@ function Navbar() {
       </div>
 
       <div className="navbarRight">
-        <span className="userWelcome">
-          Welcome, {user?.username || "User"}
-        </span>
+        <span className="userWelcome"> Welcome, {user?.username || "User"} </span>
 
-        <button className="btnLogout" onClick={logoutUser}>
-          Logout
-        </button>
+        <button className="btnLogout" onClick={logoutUser}> Logout </button>
       </div>
     </header>
-  );
+  )
 }
 
-export { Navbar };
+export { Navbar }

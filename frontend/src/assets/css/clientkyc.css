@@ -174,3 +174,61 @@ button{
 .save-btn:hover{
     background:#1d4ed8;
 }
+
+/* ==================================
+   SMALL DEVICES (480px)
+================================== */
+
+@media (max-width:480px){
+
+  .kyc-container{
+    margin:24px 16px;
+  }
+
+  .kyc-card{
+    padding:18px;
+  }
+
+  /* Stack profile section */
+  .profile-card{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:16px;
+  }
+
+  .avatar-area{
+    align-items:flex-start;
+  }
+
+  .avatar-area img{
+    width:76px;
+    height:76px;
+  }
+
+  /* Convert grid to single column */
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .field.full{
+    grid-column:span 1;
+  }
+
+  /* Button full width */
+  .kycActionButtons{
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .save-btn{
+    width:100%;
+  }
+
+  /* Back button adjustment */
+  .backBtn{
+    position:static;
+    padding:0;
+    margin-bottom:16px;
+  }
+
+}
