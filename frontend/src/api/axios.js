@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:8000/api",
+  baseURL: "https://pet-walker-5.onrender.com/api",
 });
 
 // Attach token automatically
