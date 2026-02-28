@@ -4,9 +4,10 @@ from rest_framework.validators import ValidationError
 # serializer
 from apps.subscription.serializers import SubscriptionPlanUserSerializer,ProviderServiceSerializer
 # models
-from apps.subscription.models import SubscribedUserPlan,ProviderService
+from apps.subscription.models import SubscribedUserPlan,ProviderService, SubscriptionPlan
 from rest_framework.response import Response
 
+from rest_framework.views import APIView
 # Create your views here.
 
 
@@ -118,23 +119,49 @@ def publish_service(request,pk):
     qs_obj.save()
     return Response({"msg":"service will be published soon.Thank you"})
 
-    
-
-    
-
-    
-
-    
 
 
+class SubscriptionView(APIView):
 
+    def post(self, request, plan):
+        plan_id = request.query_params.get("plan_id")
+        user = request.user
 
-    
+        if not plan_id:
+            return Response(
+                {"error": "plan_id is required"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
+        try:
+            selected_plan = SubscriptionPlan.objects.get(
+                id=plan_id,
+                plan_name=plan
+            )
+        except SubscriptionPlan.DoesNotExist:
+            return Response(
+                {"error": "Plan does not exist."},
+                status=status.HTTP_404_NOT_FOUND
+            )
 
-    
-   
+        # prevent duplicate active plan
+        if SubscribedUserPlan.objects.filter(
+            user=user,
+            subscription_plan=selected_plan,
+            is_active=True
+        ).exists():
+            return Response(
+                {"error": "User already has this active subscription"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
+        created_plan = SubscribedUserPlan.objects.create(
+            user=user,
+            subscription_plan=selected_plan
+        )
 
-    
-
+        return Response({
+            "message": "Subscription activated",
+            "plan": created_plan.subscription_plan.plan_name,
+            "expires_on": created_plan.end_date
+        }, status=status.HTTP_201_CREATED)

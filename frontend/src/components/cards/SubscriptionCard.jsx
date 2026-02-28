@@ -1,7 +1,9 @@
 import "../../assets/css/layout/subscriptioncard.css";
 import { Check } from "lucide-react";
-
-
+import { useUserContext } from "../../contexts/UserContext";
+import { useEffect } from "react";
+import { boundSubscription } from "../../api/subscription/subscription";
+import { useNavigate } from "react-router-dom";
 
 const SUBSCRIPTION_PACKS = [
   {
@@ -34,6 +36,40 @@ const SUBSCRIPTION_PACKS = [
 ];
 
 function SubscriptionCard() {
+
+  const { user } = useUserContext() 
+  const navigate = useNavigate()
+
+  // Check if user have subscription or not 
+  useEffect(()=>{
+    
+  },[])
+
+
+  const handleSubscription = async (plan,id) => {
+
+    let res = await boundSubscription( plan,id )
+
+    if(!res.error){
+      console.log(res.error)
+      return false
+    }
+
+    alert('subscription made.')
+
+    if (user.role.includes("provider") && user.role.includes("customer")) {
+      navigate("/customer-dashboard");
+    }
+    else if (user.role.includes("provider")) {
+      navigate("/provider-dashboard");
+    }
+    else {
+      navigate("/customer-dashboard");
+    }
+  
+  }
+
+
   return (
     <section className="pricingSection">
       <h1>Flexible Plans</h1>
@@ -59,8 +95,9 @@ function SubscriptionCard() {
               <span className="price">{plan.price}</span>
               <span className="perMonth">/month</span>
             </div>
-
+ 
             <button
+              onClick={()=>handleSubscription( plan.heading , plan.id )}
               className={`planBtn ${
                 plan.is_popular ? "primaryPlanBtn" : "secondaryPlanBtn"
               }`}

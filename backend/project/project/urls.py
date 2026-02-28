@@ -32,7 +32,7 @@ urlpatterns = [
     path('api/application/',include('apps.genericapp.urls')),
 
     path('api/register/',user_signup),
-    path("api/auth/me/",find_user)
+    path("api/auth/me/",find_user),
 
 ] + static( settings.MEDIA_URL,
             document_root = settings.MEDIA_ROOT )
