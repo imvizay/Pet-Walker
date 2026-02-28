@@ -79,8 +79,20 @@ function AuthForm() {
       localStorage.setItem("accessToken",result.data.access)
       localStorage.setItem("refresh",result.data.refresh)
 
-      await fetchCurrentUser()
-      return alert("Logged In.")      
+      let res = await fetchCurrentUser()
+
+      if(res.has_subscription){
+        if(res.role.includes("customer") && res.role.includes("provider")){
+          return navigate('/customer-dashboard')
+        }
+        else if (res.role.includes("provider")){
+          return navigate('/provider-dashboard')
+        }
+        else{
+          return navigate('/customer-dashboard')
+        }
+      }
+      return alert("Logged In , Choose a subscription type and proceed further",navigate('/'))      
     }
 
     // REGISTER

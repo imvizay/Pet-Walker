@@ -13,7 +13,7 @@ function CustomerDashboardNavbar() {
   const {user,logoutUser } = useUserContext()
 
   useEffect(()=>{
-    console.log(user.profile_pic)
+    console.log(user?.profile_pic)
   },[])
 
   return (
