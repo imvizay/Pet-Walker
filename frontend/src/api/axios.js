@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://pet-walker-5.onrender.com/api",
+  baseURL: "https://yourusername.pythonanywhere.com",
 });
 
 // Attach token automatically
