@@ -4,6 +4,57 @@
   font-family: "Inter", system-ui, sans-serif;
 }
 
+/* overlay effect for error */
+.overlayErrorWrapper{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  animation:fadeIn .2s ease-in-out;
+}
+
+.overlayErrorBox{
+  background:white;
+  padding:30px 35px;
+  border-radius:16px;
+  width:360px;
+  text-align:center;
+  box-shadow:0 20px 40px rgba(0,0,0,.2);
+}
+
+.overlayErrorBox h3{
+  color:#dc2626;
+  margin-bottom:10px;
+}
+
+.overlayErrorBox p{
+  font-size:14px;
+  color:#444;
+  margin-bottom:20px;
+}
+
+.overlayErrorBox button{
+  background:#dc2626;
+  color:white;
+  border:none;
+  padding:10px 20px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.overlayErrorBox button:hover{
+  background:#b91c1c;
+}
+
+@keyframes fadeIn{
+  from{opacity:0}
+  to{opacity:1}
+}
+
 .authHeader {
   display: flex;
   justify-content: space-between;

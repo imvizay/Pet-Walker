@@ -1,3 +1,7 @@
+
+html {
+  scroll-behavior: smooth !important;
+}
 .navbar {
   height: 64px;
   padding: 0 40px;

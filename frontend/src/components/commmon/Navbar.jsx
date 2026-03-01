@@ -14,14 +14,14 @@ function Navbar() {
       <header className="navbar">
         <div className="navbarBrand">
           <span className="logoDot"><PawPrint size={22} /></span>
-          <h1 className="brandText">PetWalker</h1>
+          <h1 className="brandText"><Link style={{textDecoration:"none"}} to='/'>PetWalker</Link></h1>
         </div>
 
         {/* Desktop Links */}
         <nav className="navbarLinks">
-          <Link to="/">How it works</Link>
-          <Link to="/">Pricing</Link>
-          <Link to="/">Find Walkers</Link>
+          <Link to="/#how-it-works">How it works</Link>
+          <Link to="/#pricing">Pricing</Link>
+         
         </nav>
 
         <div className="navbarActions">
@@ -36,9 +36,8 @@ function Navbar() {
 
         {/* Mobile Menu */}
         <div className={`mobileMenu ${menuOpen ? "open" : ""}`}>
-          <Link to="/" onClick={() => setMenuOpen(false)}>How it works</Link>
-          <Link to="/" onClick={() => setMenuOpen(false)}>Pricing</Link>
-          <Link to="/" onClick={() => setMenuOpen(false)}>Find Walkers</Link>
+          <Link to="/#how-it-works" onClick={() => setMenuOpen(false)}>How it works</Link>
+          <Link to="/#pricing" onClick={() => setMenuOpen(false)}>Pricing</Link>
           <Link to="/auth/login" onClick={() => setMenuOpen(false)}>Login</Link>
           <Link to="/auth/register" onClick={() => setMenuOpen(false)}>Sign Up</Link>
         </div>

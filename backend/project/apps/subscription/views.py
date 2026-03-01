@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from rest_framework.decorators import api_view
+from project.permissions import IsProvider
+from rest_framework.decorators import api_view,permission_classes
 from rest_framework.validators import ValidationError
 # serializer
 from apps.subscription.serializers import SubscriptionPlanUserSerializer,ProviderServiceSerializer
@@ -12,6 +13,7 @@ from rest_framework.views import APIView
 
 
 @api_view(["GET"])
+@permission_classes([IsProvider])
 def get_subscription_detail(request):
     user = request.user
 
@@ -30,7 +32,9 @@ def get_subscription_detail(request):
     
     
 from rest_framework import status
+
 @api_view(["GET","POST","DELETE"])
+@permission_classes([IsProvider])
 def activate_services(request):
     req_user = request.user
 
@@ -100,6 +104,7 @@ def activate_services(request):
 
 
 @api_view(["POST"])
+@permission_classes([IsProvider])
 def publish_service(request,pk):
     user = request.user
 

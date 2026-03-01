@@ -20,8 +20,9 @@ body{
 
 .dashboardGrid{
   display:grid;
+  margin-left: 25px;
   grid-template-columns:2fr 1fr;
-  gap:24px;
+  gap:10px;
 }
 
 .leftColumn,
@@ -114,6 +115,7 @@ HEADER
   justify-content:space-between;
   align-items:center;
   margin-bottom:18px;
+  margin-left: 25px;
 }
 
 .headerInfo h2{
@@ -163,6 +165,8 @@ PROFILE
   align-items:center;
   gap:16px;
 }
+
+
 
 .profileAvatar{
   width:60px;
@@ -263,6 +267,7 @@ MOBILE RESPONSIVE
   .dashboardGrid{
     display:flex;
     flex-direction:column;
+    margin-left: 0px;
   }
 
   .leftColumn,
@@ -278,6 +283,7 @@ MOBILE RESPONSIVE
     flex-direction:column;
     align-items:flex-start;
     gap:10px;
+    margin-left: 0px;
   }
 
   .headerActions{
@@ -339,6 +345,12 @@ MOBILE RESPONSIVE
   .profileAvatar{
     width:48px;
     height:48px;
+  }
+  .headerWrapper{
+    margin-left: 0px;
+  }
+  .displayGrid{
+    margin-left: 0px;
   }
 
 }

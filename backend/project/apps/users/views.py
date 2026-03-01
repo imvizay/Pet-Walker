@@ -5,7 +5,6 @@ from rest_framework.response import Response
 from apps.users.models import Client as User , ClientKyc
 from rest_framework.decorators import api_view,permission_classes
 from apps.users.serializers import UserSerializer,ClientKycSerializer
-from apps.subscription.models import SubscribedUserPlan
 
 from rest_framework.views import APIView
 
@@ -58,8 +57,13 @@ class MeView(APIView):
         return Response(serializer.data)
 
 
+
+from project.permissions import IsProvider
+
 class MeKycView(APIView):
-   
+
+    permission_classes=[IsProvider]
+
     def get(self, request):
 
         kyc = ClientKyc.objects.filter(
