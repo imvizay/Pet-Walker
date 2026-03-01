@@ -2,11 +2,12 @@
 
 
 import axios from "axios";
+import api from "./axios";
 const fetchCurrentUser = async () => {
     const token = localStorage.getItem("accessToken")
     console.log("frontend token:" , token)
     try{
-        const res = await axios.get(`http://localhost:8000/api/auth/me/`,{
+        const res = await api.get(`/auth/me/`,{
             headers:{
                 Authorization:`Bearer ${token}`
             }
