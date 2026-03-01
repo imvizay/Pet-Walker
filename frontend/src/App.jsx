@@ -24,6 +24,8 @@ import JobsList from './pages/serviceprovider/ListedJobs'
 import ApplicationsNotificationPanel from './pages/customer/Applications'
 import ApplicationNotifications from './components/providerDashboard/application/Message'
 
+import RoleProtectedRoutes from './routes/RoleProtectedRoutes'
+
 function App() {
   return (
     <Routes>
@@ -34,9 +36,16 @@ function App() {
       </Route>
 
       {/* CUSTOMER */}
-      <Route path='customer-dashboard' element={<CustomerDashboardLayout/>}>
-        <Route index element={<CustomerDashboard/>}/>
-        
+      <Route 
+         path='customer-dashboard' 
+         element={ 
+                  <RoleProtectedRoutes allowedRoles={["customer"]}>  
+                   <CustomerDashboardLayout/>  
+                  </RoleProtectedRoutes>
+         }>
+
+
+        <Route index element={<CustomerDashboard/>}/>        
         <Route path='jobpost' element={<JobPostForm/>}/>
         <Route path='manage/:id' element={<ManagePost/>}/>
         <Route path='editpost/:id' element={<JobPostForm/>}/>
@@ -51,7 +60,14 @@ function App() {
 
       {/* SERVICE PROVIDER */}
 
-      <Route path='provider-dashboard' element={<ProviderDashboard/>}>
+      <Route 
+          path='provider-dashboard' 
+          element={
+                  <RoleProtectedRoutes allowedRoles={['provider']}>
+                    <ProviderDashboard/>
+                  </RoleProtectedRoutes>
+          }>
+            
         <Route index element={<Home/>}/>
         <Route path='client-kyc/:id' element={<ClientProfileUpdate/>}/>
         <Route path='service-panel/:id' element = {<ServicesPanel/>}/>

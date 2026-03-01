@@ -7,10 +7,10 @@ import '../../assets/css/customer_dashboard/navbar/customer_navbar.css'
 import { NavLink } from "react-router-dom";
 import { useUserContext } from "../../contexts/UserContext";
 import { useEffect } from "react";
-const BASE = 'http://localhost:8000'
+const BASE = 'https://vizaymeena.pythonanywhere.com/';
 function CustomerDashboardNavbar() {
 
-  const {user,logoutUser } = useUserContext()
+  const { user,logoutUser } = useUserContext()
 
   useEffect(()=>{
     console.log(user?.profile_pic)

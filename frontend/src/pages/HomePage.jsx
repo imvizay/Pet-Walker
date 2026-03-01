@@ -13,7 +13,23 @@ const SITE_SERVICES = [
 import displayImg from '../assets/images/Dog_Breeds.jpg'
 import SubscriptionCard from '../components/cards/SubscriptionCard'
 
+
+import { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 function HeroSection() {
+
+  const location = useLocation()
+
+  useEffect(() => {
+    if (location.hash) {
+      const element = document.querySelector(location.hash)
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth" })
+        }, 0)
+      }
+    }
+  }, [location])
 
   return (
     <>
@@ -38,7 +54,7 @@ function HeroSection() {
         </div>
       </section>
 
-      <section className="howItWorks">
+      <section id='how-it-works' className="howItWorks">
         <h1>How it Works</h1>
         <p className="howSubtitle">
           Getting the best care for your pet is easy, secure, and stress-free.
@@ -57,7 +73,9 @@ function HeroSection() {
         </div>
       </section>
 
-      <SubscriptionCard/>
+      <section id='pricing'>
+        <SubscriptionCard/>
+      </section>
 
      <section className="ctaSection">
       <h1 className="ctaTitle">

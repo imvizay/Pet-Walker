@@ -40,22 +40,16 @@ function SubscriptionCard() {
   const { user } = useUserContext() 
   const navigate = useNavigate()
 
-  // Check if user have subscription or not 
-  useEffect(()=>{
-    
-  },[])
+  const handleSubscription = async () => {
 
+    // let res = await boundSubscription( plan,id )
 
-  const handleSubscription = async (plan,id) => {
+    // if(!res.error){
+    //   console.log(res.error)
+    //   return false
+    // }
 
-    let res = await boundSubscription( plan,id )
-
-    if(!res.error){
-      console.log(res.error)
-      return false
-    }
-
-    alert('subscription made.')
+    // alert('subscription made.')
 
     if (user.role.includes("provider") && user.role.includes("customer")) {
       navigate("/customer-dashboard");
@@ -80,11 +74,7 @@ function SubscriptionCard() {
       <div className="pricingGrid">
         {SUBSCRIPTION_PACKS.map((plan) => (
           <div
-            key={plan.id}
-            className={`pricingCard ${
-              plan.is_popular ? "popularCard" : ""
-            }`}
-          >
+            key={plan.id} className={`pricingCard ${   plan.is_popular ? "popularCard" : "" }`} >
             {plan.is_popular && (
               <span className="popularBadge">Most Popular</span>
             )}
@@ -97,11 +87,12 @@ function SubscriptionCard() {
             </div>
  
             <button
-              onClick={()=>handleSubscription( plan.heading , plan.id )}
-              className={`planBtn ${
-                plan.is_popular ? "primaryPlanBtn" : "secondaryPlanBtn"
-              }`}
-            >
+              onClick={()=>handleSubscription()} 
+              className={`planBtn ${ 
+                  plan.is_popular ? "primaryPlanBtn" : "secondaryPlanBtn" 
+
+              }`} 
+              >
               {plan.is_popular ? "Go Pro" : "Get Started"}
             </button>
 

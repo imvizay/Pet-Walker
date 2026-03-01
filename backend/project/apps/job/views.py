@@ -9,10 +9,13 @@ from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_framework.permissions import IsAuthenticated
 from apps.job.serializers import *
 
+from project.permissions import IsCustomer
+
 
 class PetTypeView(ReadOnlyModelViewSet):
     queryset = PetType.objects.all()
     serializer_class = PetTypeSerializer
+    permission_classes = [IsCustomer]
 
 class PetBreedView(ReadOnlyModelViewSet):
     serializer_class = PetBreedSerializer
@@ -29,7 +32,8 @@ class PetBreedView(ReadOnlyModelViewSet):
 
 class MyJobPostView(ModelViewSet):
     serializer_class = MyJobPostSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsCustomer]
+    
     
     def get_queryset(self):
         user = self.request.user
@@ -54,6 +58,7 @@ from apps.job.pagination import pagination
 class DiscoverProviders(ListAPIView):
     pagination_class = pagination.ProviderPagination
     serializer_class = DiscoverProviderSerializer
+    permission_classes = [IsCustomer]
 
     def get_queryset(self):
 
@@ -87,6 +92,7 @@ class DiscoverProviders(ListAPIView):
 from apps.job.serializers import DiscoverJobsSerializer
 class DiscoverJobs(ListAPIView):
     serializer_class = DiscoverJobsSerializer
+    
 
     def get_queryset(self):
         qs = MyJobPost.objects.filter(is_active=True).select_related("owner","pet_type","pet_breed")

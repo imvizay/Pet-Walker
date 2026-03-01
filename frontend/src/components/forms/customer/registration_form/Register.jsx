@@ -6,7 +6,7 @@ import { PawPrint, Briefcase, Share2 } from "lucide-react";
 import GoogleLoginButton from "../../../google/GoogleButton";
 
 import { createUser, loginUser } from "../../../../api/auth";
-
+import { useUserContext } from "../../../../contexts/UserContext";
 import { accountRegistrationVal } from "../../../../utilis/validate_registration";
 import fetchCurrentUser from "../../../../api/currentuser";
 
@@ -32,7 +32,7 @@ const AUTH_CONFIG = {
 };
 
 function AuthForm() {
-
+  const { saveUser} = useUserContext()
   const navigate = useNavigate()
   const { type } = useParams()
   const config = AUTH_CONFIG[type]
@@ -44,6 +44,8 @@ function AuthForm() {
   const [role,setRole] = useState("customer");
   const [loginData,setLoginData] = useState(emptyLogin);
   const [regDetail,setRegDetail] = useState(emptyRegister);
+
+  const [overlayError, setOverlayError] = useState(null)
 
   if (!config) return <Navigate to="/auth/login" />;
 
@@ -72,17 +74,21 @@ function AuthForm() {
       const result = await loginUser(loginData)
 
       if(!result.success){
-        setErrors(result.error || {})
-        return
-      }
+       const message = result.error?.detail || "Invalid login credentials"
+       setOverlayError(message)
+       return
+      }     
 
       localStorage.setItem("accessToken",result.data.access)
       localStorage.setItem("refresh",result.data.refresh)
 
       let res = await fetchCurrentUser()
+      localStorage.setItem("user", JSON.stringify(res))
+      saveUser()
 
       if(res.has_subscription){
         if(res.role.includes("customer") && res.role.includes("provider")){
+          
           return navigate('/customer-dashboard')
         }
         else if (res.role.includes("provider")){
@@ -128,7 +134,21 @@ function AuthForm() {
 
   // ---------------- RENDER ----------------
   return (
+    
     <div className="authPage">
+
+       {overlayError && (
+          <div className="overlayErrorWrapper">
+            <div className="overlayErrorBox">
+              <h3>Login Failed</h3>
+              <p>{overlayError}</p>
+              <button onClick={() => setOverlayError(null)}>
+                Try Again
+              </button>
+            </div>
+          </div>
+        )}
+
       <div className="authCard">
 
         <h1>{config.title}</h1>

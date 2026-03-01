@@ -5,6 +5,7 @@ from rest_framework.decorators import action
 from rest_framework import status
 from rest_framework.response import Response
 
+from project.permissions import IsProvider ,IsCustomer
 from apps.genericapp.serializers import ApplicationSerializer,CustomerApplicationSerializer
 # Create your views here.
 
@@ -16,6 +17,7 @@ class ProviderApplicationView(ListCreateAPIView):
     """
     queryset = ProviderApplication.objects.all()
     serializer_class = ApplicationSerializer
+    permission_classes = [IsProvider]
 
     def get_queryset(self):
         
@@ -41,6 +43,7 @@ class OwnerApplicationView(ListCreateAPIView):
     """
     queryset = ProviderApplication.objects.all()
     serializer_class = ApplicationSerializer
+    permission_classes = [IsCustomer]
 
     def get_queryset(self):
         user  = self.request.user
@@ -53,6 +56,7 @@ class UpdateApplication(UpdateAPIView):
     """
     queryset = ProviderApplication.objects.all()
     serializer_class = ApplicationSerializer
+    permission_classes =[IsCustomer]
 
     def patch(self, request, *args, **kwargs):
         applicant_id = request.data.get("applicant_id")
@@ -94,6 +98,7 @@ class CustomerApplicationView(ListCreateAPIView):
     View for Customer to send application request to the service provider for the services that has published.
     """
     queryset = CustomerApplication.objects.all()
+    permission_classes = [IsCustomer]
     serializer_class = CustomerApplicationSerializer
 
 
@@ -101,6 +106,7 @@ class CustomerApplicationView(ListCreateAPIView):
 
 class CustomerApplicationUpdateView(UpdateAPIView):
     queryset = CustomerApplication.objects.all()
+    permission_classes = [IsProvider]
     serializer_class = CustomerApplicationSerializer
 
     def patch(self, request, *args, **kwargs):
