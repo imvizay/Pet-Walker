@@ -1,8 +1,7 @@
 // Api endpoint for getting users USERNAME & ID 
 
-
-import axios from "axios";
 import api from "./axios";
+
 const fetchCurrentUser = async () => {
     const token = localStorage.getItem("accessToken")
     console.log("frontend token:" , token)
