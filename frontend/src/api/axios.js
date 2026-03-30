@@ -1,7 +1,8 @@
 import axios from "axios";
-const VITE_BASE_URL_DEV = 'http://127.0.0.1:8000'
+// const VITE_BASE_URL_DEV = 'http://127.0.0.1:8000'
+const renderHost = "https://pet-walker-5.onrender.com/api"
 const api = axios.create({
-  baseURL: "https://vizaymeena.pythonanywhere.com/api",
+  baseURL: `${renderHost}`,
 });
 
 // Attach token automatically
